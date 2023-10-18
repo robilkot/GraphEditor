@@ -28,51 +28,88 @@
         /// </summary>
         private void InitializeComponent()
         {
-            VertexName = new Label();
-            pictureBox1 = new PictureBox();
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).BeginInit();
-            SuspendLayout();
+            this.components = new System.ComponentModel.Container();
+            this.VertexContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
+            this.RenameMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ChangeColorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.CreateEdgeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ExcludeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.DeleteMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.VertexContextMenu.SuspendLayout();
+            this.SuspendLayout();
             // 
-            // VertexName
+            // VertexContextMenu
             // 
-            VertexName.AutoSize = true;
-            VertexName.Location = new Point(0, 22);
-            VertexName.Name = "VertexName";
-            VertexName.Size = new Size(107, 25);
-            VertexName.TabIndex = 0;
-            VertexName.Text = "VertexName";
+            this.VertexContextMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
+            this.VertexContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.RenameMenuItem,
+            this.ChangeColorMenuItem,
+            this.CreateEdgeMenuItem,
+            this.ExcludeMenuItem,
+            this.DeleteMenuItem});
+            this.VertexContextMenu.Name = "contextMenuStrip1";
+            this.VertexContextMenu.Size = new System.Drawing.Size(259, 152);
             // 
-            // pictureBox1
+            // RenameMenuItem
             // 
-            pictureBox1.BackColor = SystemColors.ActiveCaptionText;
-            pictureBox1.Location = new Point(100, 50);
-            pictureBox1.Name = "pictureBox1";
-            pictureBox1.Size = new Size(50, 50);
-            pictureBox1.TabIndex = 1;
-            pictureBox1.TabStop = false;
+            this.RenameMenuItem.Name = "RenameMenuItem";
+            this.RenameMenuItem.Size = new System.Drawing.Size(258, 24);
+            this.RenameMenuItem.Text = "Изменить идентификатор";
+            // 
+            // ChangeColorMenuItem
+            // 
+            this.ChangeColorMenuItem.Name = "ChangeColorMenuItem";
+            this.ChangeColorMenuItem.Size = new System.Drawing.Size(258, 24);
+            this.ChangeColorMenuItem.Text = "Изменить цвет";
+            this.ChangeColorMenuItem.Click += new System.EventHandler(this.ChangeColorMenuItem_Click);
+            // 
+            // CreateEdgeMenuItem
+            // 
+            this.CreateEdgeMenuItem.Name = "CreateEdgeMenuItem";
+            this.CreateEdgeMenuItem.Size = new System.Drawing.Size(258, 24);
+            this.CreateEdgeMenuItem.Text = "Начать дугу";
+            // 
+            // ExcludeMenuItem
+            // 
+            this.ExcludeMenuItem.Name = "ExcludeMenuItem";
+            this.ExcludeMenuItem.Size = new System.Drawing.Size(258, 24);
+            this.ExcludeMenuItem.Text = "Исключить";
+            // 
+            // DeleteMenuItem
+            // 
+            this.DeleteMenuItem.Name = "DeleteMenuItem";
+            this.DeleteMenuItem.Size = new System.Drawing.Size(258, 24);
+            this.DeleteMenuItem.Text = "Удалить";
+            this.DeleteMenuItem.Click += new System.EventHandler(this.DeleteMenuItem_Click);
             // 
             // VertexControl
             // 
-            AllowDrop = true;
-            AutoScaleDimensions = new SizeF(10F, 25F);
-            AutoScaleMode = AutoScaleMode.Font;
-            AutoSize = true;
-            AutoSizeMode = AutoSizeMode.GrowAndShrink;
-            BackColor = SystemColors.ControlDarkDark;
-            Controls.Add(pictureBox1);
-            Controls.Add(VertexName);
-            Name = "VertexControl";
-            Size = new Size(153, 103);
-            MouseDown += VertexControl_MouseDown;
-            MouseMove += VertexControl_MouseMove;
-            ((System.ComponentModel.ISupportInitialize)pictureBox1).EndInit();
-            ResumeLayout(false);
-            PerformLayout();
+            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
+            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
+            this.ContextMenuStrip = this.VertexContextMenu;
+            this.Cursor = System.Windows.Forms.Cursors.SizeAll;
+            this.DoubleBuffered = true;
+            this.Margin = new System.Windows.Forms.Padding(0);
+            this.MaximumSize = new System.Drawing.Size(35, 35);
+            this.MinimumSize = new System.Drawing.Size(35, 35);
+            this.Name = "VertexControl";
+            this.Size = new System.Drawing.Size(35, 35);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.VertexControl_Paint);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.VertexControl_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.VertexControl_MouseMove);
+            this.VertexContextMenu.ResumeLayout(false);
+            this.ResumeLayout(false);
+
         }
 
         #endregion
 
-        private Label VertexName;
-        private PictureBox pictureBox1;
+        private ContextMenuStrip VertexContextMenu;
+        private ToolStripMenuItem RenameMenuItem;
+        private ToolStripMenuItem CreateEdgeMenuItem;
+        private ToolStripMenuItem ChangeColorMenuItem;
+        private ToolStripMenuItem DeleteMenuItem;
+        private ToolStripMenuItem ExcludeMenuItem;
     }
 }
