@@ -5,6 +5,26 @@ namespace LW5.UserInterface
     [Serializable]
     public partial class GraphControl : UserControl
     {
+        public List<ISelectable> Selected
+        {
+            get
+            {
+                List<ISelectable> selected = new();
+
+                foreach (var control in Controls)
+                {
+                    if (control is ISelectable selectable)
+                    {
+                        if (selectable.Selected == true)
+                        {
+                            selected.Add(selectable);
+                        }
+                    }
+                }
+
+                return selected;
+            }
+        }
         private Graph _graph = new();
         public Graph Graph
         {
@@ -28,7 +48,8 @@ namespace LW5.UserInterface
 
             foreach (var vertex in _graph.Vertices)
             {
-                var control = new VertexControl(vertex);
+                var control = new VertexControl();
+                control.Vertex = vertex;
 
                 control.Location = newControlLocation;
                 Controls.Add(control);
@@ -70,7 +91,6 @@ namespace LW5.UserInterface
                 }
             }
         }
-
         public void DeselectAll()
         {
             foreach (Control control in Controls)
@@ -93,7 +113,8 @@ namespace LW5.UserInterface
             Vertex vertex = new();
             _graph.Vertices.Add(vertex);
 
-            var control = new VertexControl(vertex);
+            var control = new VertexControl();
+            control.Vertex = vertex;
             control.Location = location;
 
             Controls.Add(control);
@@ -103,18 +124,15 @@ namespace LW5.UserInterface
         {
             List<IDeletable> toDelete = new();
 
-            foreach(var control in Controls)
+            foreach (var graphObject in Selected)
             {
-                if(control is ISelectable selectable)
+                if (graphObject is IDeletable graphElement)
                 {
-                    if(selectable.Selected == true && selectable is IDeletable graphElement)
-                    {
-                        toDelete.Add(graphElement);
-                    }
+                    toDelete.Add(graphElement);
                 }
             }
 
-            foreach(var element in toDelete)
+            foreach (var element in toDelete)
             {
                 element.Delete();
             }

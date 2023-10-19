@@ -9,12 +9,7 @@ namespace LW5
         {
             get
             {
-                if (OpenedFilesTabs.SelectedTab.Controls["graphLayout"] is GraphControl graphControl)
-                {
-                    return graphControl.Graph;
-
-                }
-                else return null;
+                return ActiveGraphControl?.Graph;
             }
         }
         public GraphControl? ActiveGraphControl
@@ -45,7 +40,7 @@ namespace LW5
             graphLayout.Name = "graphLayout";
 
             TabPage newTab = new();
-            newTab.Text = "New graph";
+            newTab.Text = Styles.DefaultFileName;
             newTab.Controls.Add(graphLayout);
 
             OpenedFilesTabs.TabPages.Add(newTab);
@@ -55,15 +50,6 @@ namespace LW5
         private void CreateMenuItem_Click(object sender, EventArgs e)
         {
             CreateNewTab();
-
-            //Graph graph = new();
-
-            //graph.Vertices.Add(new() { Color = Color.Red, Identifier = "Test1" });
-            //graph.Vertices.Add(new() { Color = Color.Blue, Identifier = "Test2" });
-            //graph.Vertices.Add(new() { Color = Color.Green, Identifier = "Test3" });
-
-            //LayoutControl layout = (LayoutControl)OpenedFilesTabs.SelectedTab.Controls["graphLayout"];
-            //layout.SetGraph(graph);
         }
 
         private void CloseMenuItem_Click(object sender, EventArgs e)
@@ -76,7 +62,7 @@ namespace LW5
 
         private void InfoMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("Графовый редактор, сделанный в рамках лабороторной работы 5 по дисциплине ОТИС.\n\nWith love by @robilkot.", "О программе");
+            MessageBox.Show(Styles.ProgramDescriptionText, Styles.ProgramDescriptionWindowText);
         }
     }
 }

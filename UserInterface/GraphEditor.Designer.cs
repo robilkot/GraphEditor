@@ -38,7 +38,6 @@
             this.SaveAsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.редактированиеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.InfoMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.InputColorDialog = new System.Windows.Forms.ColorDialog();
             this.MenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -51,7 +50,7 @@
             this.OpenedFilesTabs.Margin = new System.Windows.Forms.Padding(2);
             this.OpenedFilesTabs.Name = "OpenedFilesTabs";
             this.OpenedFilesTabs.SelectedIndex = 0;
-            this.OpenedFilesTabs.Size = new System.Drawing.Size(1116, 592);
+            this.OpenedFilesTabs.Size = new System.Drawing.Size(1262, 645);
             this.OpenedFilesTabs.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.OpenedFilesTabs.TabIndex = 1;
             // 
@@ -64,7 +63,7 @@
             this.InfoMenuItem});
             this.MenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MenuStrip.Name = "MenuStrip";
-            this.MenuStrip.Size = new System.Drawing.Size(1116, 28);
+            this.MenuStrip.Size = new System.Drawing.Size(1262, 28);
             this.MenuStrip.TabIndex = 2;
             this.MenuStrip.Text = "menuStrip1";
             // 
@@ -130,11 +129,12 @@
             this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1116, 620);
+            this.ClientSize = new System.Drawing.Size(1262, 673);
             this.Controls.Add(this.OpenedFilesTabs);
             this.Controls.Add(this.MenuStrip);
             this.MainMenuStrip = this.MenuStrip;
             this.Margin = new System.Windows.Forms.Padding(2);
+            this.MinimumSize = new System.Drawing.Size(900, 450);
             this.Name = "GraphEditor";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Графовый редактор";
@@ -157,6 +157,5 @@
         private ToolStripMenuItem SaveAsMenuItem;
         private ToolStripMenuItem редактированиеToolStripMenuItem;
         private ToolStripMenuItem InfoMenuItem;
-        internal ColorDialog InputColorDialog;
     }
 }

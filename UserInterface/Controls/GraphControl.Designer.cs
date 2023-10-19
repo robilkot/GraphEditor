@@ -33,6 +33,7 @@
             this.CreateVertexMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SelectAllMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DeleteSelectedMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.InputColorDialog = new System.Windows.Forms.ColorDialog();
             this.LayoutContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -45,7 +46,7 @@
             this.DeleteSelectedMenuItem});
             this.LayoutContextMenu.Name = "LayoutContextMenu";
             this.LayoutContextMenu.ShowImageMargin = false;
-            this.LayoutContextMenu.Size = new System.Drawing.Size(200, 104);
+            this.LayoutContextMenu.Size = new System.Drawing.Size(200, 76);
             // 
             // CreateVertexMenuItem
             // 
@@ -89,5 +90,6 @@
         private ToolStripMenuItem CreateVertexMenuItem;
         private ToolStripMenuItem SelectAllMenuItem;
         private ToolStripMenuItem DeleteSelectedMenuItem;
+        internal ColorDialog InputColorDialog;
     }
 }

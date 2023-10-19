@@ -35,6 +35,7 @@
             this.CreateEdgeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ExcludeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DeleteMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.VertexIcon = new System.Windows.Forms.Panel();
             this.VertexContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -48,7 +49,7 @@
             this.ExcludeMenuItem,
             this.DeleteMenuItem});
             this.VertexContextMenu.Name = "contextMenuStrip1";
-            this.VertexContextMenu.Size = new System.Drawing.Size(259, 152);
+            this.VertexContextMenu.Size = new System.Drawing.Size(259, 124);
             // 
             // RenameMenuItem
             // 
@@ -82,17 +83,26 @@
             this.DeleteMenuItem.Text = "Удалить";
             this.DeleteMenuItem.Click += new System.EventHandler(this.DeleteMenuItem_Click);
             // 
+            // VertexIcon
+            // 
+            this.VertexIcon.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.VertexIcon.Location = new System.Drawing.Point(0, 0);
+            this.VertexIcon.Name = "VertexIcon";
+            this.VertexIcon.Size = new System.Drawing.Size(35, 35);
+            this.VertexIcon.TabIndex = 1;
+            this.VertexIcon.Paint += new System.Windows.Forms.PaintEventHandler(this.VertexIcon_Paint);
+            this.VertexIcon.MouseDown += new System.Windows.Forms.MouseEventHandler(this.VertexControl_MouseDown);
+            this.VertexIcon.MouseMove += new System.Windows.Forms.MouseEventHandler(this.VertexControl_MouseMove);
+            // 
             // VertexControl
             // 
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.BackColor = System.Drawing.Color.Transparent;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ContextMenuStrip = this.VertexContextMenu;
+            this.Controls.Add(this.VertexIcon);
             this.Cursor = System.Windows.Forms.Cursors.SizeAll;
             this.DoubleBuffered = true;
             this.Margin = new System.Windows.Forms.Padding(0);
-            this.MaximumSize = new System.Drawing.Size(35, 35);
-            this.MinimumSize = new System.Drawing.Size(35, 35);
             this.Name = "VertexControl";
             this.Size = new System.Drawing.Size(35, 35);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.VertexControl_Paint);
@@ -111,5 +121,6 @@
         private ToolStripMenuItem ChangeColorMenuItem;
         private ToolStripMenuItem DeleteMenuItem;
         private ToolStripMenuItem ExcludeMenuItem;
+        private Panel VertexIcon;
     }
 }

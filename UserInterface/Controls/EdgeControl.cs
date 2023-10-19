@@ -4,6 +4,7 @@ namespace LW5.UserInterface
 {
     public partial class EdgeControl : UserControl, ISelectable, IDeletable
     {
+        public GraphControl? GraphControl { get => Parent as GraphControl; }
         public Edge Edge { get; init; } = new();
         public bool Selected { get; set; }
         public EdgeControl()
@@ -13,9 +14,9 @@ namespace LW5.UserInterface
 
         private void ChangeColorMenuItem_Click(object sender, EventArgs e)
         {
-            if (Program.GraphEditor.InputColorDialog.ShowDialog() == DialogResult.OK)
+            if (GraphControl?.InputColorDialog.ShowDialog() == DialogResult.OK)
             {
-                Edge.Color = Program.GraphEditor.InputColorDialog.Color;
+                Edge.Color = GraphControl.InputColorDialog.Color;
                 Refresh();
             }
         }
@@ -23,7 +24,7 @@ namespace LW5.UserInterface
         public void Delete()
         {
             // check for incident edges referencing this
-            Program.GraphEditor.ActiveGraph?.DeleteEdge(Edge);
+            GraphControl?.Graph.DeleteEdge(Edge);
             Dispose();
         }
     }
