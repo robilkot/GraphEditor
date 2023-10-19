@@ -1,5 +1,7 @@
 ﻿using LW5.Logic;
 
+using static LW5.UserInterface.Styles;
+
 namespace LW5.UserInterface
 {
     public partial class EdgeControl : UserControl, ISelectable, IDeletable
@@ -11,7 +13,12 @@ namespace LW5.UserInterface
         {
             InitializeComponent();
         }
-
+        public void Delete()
+        {
+            // check for incident edges referencing this
+            GraphControl?.Graph.DeleteEdge(Edge);
+            Dispose();
+        }
         private void ChangeColorMenuItem_Click(object sender, EventArgs e)
         {
             if (GraphControl?.InputColorDialog.ShowDialog() == DialogResult.OK)
@@ -21,11 +28,5 @@ namespace LW5.UserInterface
             }
         }
 
-        public void Delete()
-        {
-            // check for incident edges referencing this
-            GraphControl?.Graph.DeleteEdge(Edge);
-            Dispose();
-        }
     }
 }

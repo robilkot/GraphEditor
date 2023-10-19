@@ -41,6 +41,8 @@ namespace LW5.UserInterface
         {
             InitializeComponent();
         }
+
+        // todo: adapt this to work with real graphs and restoring vertices locations
         private void InitializeControls()
         {
             Controls.Clear();
@@ -56,28 +58,6 @@ namespace LW5.UserInterface
 
                 newControlLocation.X += 50;
                 newControlLocation.Y += 50;
-            }
-        }
-
-        private void CreateVertexMenuItem_Click(object sender, EventArgs e)
-        {
-            var layoutLocation = PointToScreen(Location);
-            Point location = new(LayoutContextMenu.Left - layoutLocation.X, LayoutContextMenu.Top - layoutLocation.Y);
-
-            CreateVertex(location);
-        }
-
-        private void SelectAllMenuItem_Click(object sender, EventArgs e)
-        {
-            SelectAll();
-        }
-
-        // Deselects all elements
-        private void GraphControl_Click(object sender, EventArgs e)
-        {
-            if (ModifierKeys.HasFlag(Keys.Shift) == false)
-            {
-                DeselectAll();
             }
         }
         public void SelectAll()
@@ -102,22 +82,44 @@ namespace LW5.UserInterface
                 }
             }
         }
-
-        private void GraphControl_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-            CreateVertex(e.Location);
-        }
-
         private void CreateVertex(Point location)
         {
             Vertex vertex = new();
             _graph.Vertices.Add(vertex);
 
-            var control = new VertexControl();
-            control.Vertex = vertex;
-            control.Location = location;
+            var control = new VertexControl()
+            {
+                Vertex = vertex,
+                Location = location
+            };
 
             Controls.Add(control);
+        }
+
+        private void CreateVertexMenuItem_Click(object sender, EventArgs e)
+        {
+            var layoutLocation = PointToScreen(Location);
+            Point location = new(LayoutContextMenu.Left - layoutLocation.X, LayoutContextMenu.Top - layoutLocation.Y);
+
+            CreateVertex(location);
+        }
+
+        private void SelectAllMenuItem_Click(object sender, EventArgs e)
+        {
+            SelectAll();
+        }
+
+        private void GraphControl_Click(object sender, EventArgs e)
+        {
+            if (ModifierKeys.HasFlag(Keys.Shift) == false)
+            {
+                DeselectAll();
+            }
+        }
+
+        private void GraphControl_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            CreateVertex(e.Location);
         }
 
         private void DeleteSelectedMenuItem_Click(object sender, EventArgs e)

@@ -36,6 +36,7 @@
             this.ExcludeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DeleteMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.VertexIcon = new System.Windows.Forms.Panel();
+            this.VertexToolTip = new System.Windows.Forms.ToolTip(this.components);
             this.VertexContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -56,6 +57,7 @@
             this.RenameMenuItem.Name = "RenameMenuItem";
             this.RenameMenuItem.Size = new System.Drawing.Size(258, 24);
             this.RenameMenuItem.Text = "Изменить идентификатор";
+            this.RenameMenuItem.Click += new System.EventHandler(this.RenameMenuItem_Click);
             // 
             // ChangeColorMenuItem
             // 
@@ -94,6 +96,14 @@
             this.VertexIcon.MouseDown += new System.Windows.Forms.MouseEventHandler(this.VertexControl_MouseDown);
             this.VertexIcon.MouseMove += new System.Windows.Forms.MouseEventHandler(this.VertexControl_MouseMove);
             // 
+            // VertexToolTip
+            // 
+            this.VertexToolTip.AutoPopDelay = 5000;
+            this.VertexToolTip.InitialDelay = 100;
+            this.VertexToolTip.ReshowDelay = 100;
+            this.VertexToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.VertexToolTip.ToolTipTitle = "Вершина";
+            // 
             // VertexControl
             // 
             this.BackColor = System.Drawing.Color.Transparent;
@@ -122,5 +132,6 @@
         private ToolStripMenuItem DeleteMenuItem;
         private ToolStripMenuItem ExcludeMenuItem;
         private Panel VertexIcon;
+        private ToolTip VertexToolTip;
     }
 }

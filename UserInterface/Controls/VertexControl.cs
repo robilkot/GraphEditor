@@ -1,7 +1,10 @@
 ﻿using LW5.Logic;
 using LW5.UserInterface;
+using Microsoft.VisualBasic;
 using System.Drawing.Drawing2D;
 using System.Reflection;
+
+using static LW5.UserInterface.Styles;
 
 namespace LW5
 {
@@ -12,30 +15,58 @@ namespace LW5
         public Vertex Vertex { get; set; } = new();
         public bool Selected { get; set; }
 
-        private Point MouseDownLocation;
+        private Point _mouseDownLocation;
         public VertexControl()
         {
             InitializeComponent();
-            Width = Styles.VertexDiameter;
-            Height = Styles.VertexDiameter;
+            Width = VertexDiameter;
+            Height = VertexDiameter;
+            UpdateToolTip();
 
             typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty
             | BindingFlags.Instance | BindingFlags.NonPublic, null,
             VertexIcon, new object[] { true });
         }
+        public void Delete()
+        {
+            // check for incident edges referencing this
+            GraphControl?.Graph.DeleteVertex(Vertex);
+            Dispose();
+        }
 
+        private void UpdateToolTip()
+        {
+            string newText = string.Format(VertexToolTipText, Vertex.Color.ToRGBString());
+            VertexToolTip.ToolTipTitle = Vertex.Identifier;
+
+            VertexToolTip.SetToolTip(VertexIcon, newText);
+        }
         private void VertexControl_MouseDown(object sender, MouseEventArgs e)
         {
-            if (ModifierKeys.HasFlag(Keys.Shift) == false)
-            {
-                GraphControl?.DeselectAll();
-            }
 
-            Selected = !Selected;
+            if (e.Button == MouseButtons.Right)
+            {
+                if (ModifierKeys.HasFlag(Keys.Shift) == false)
+                {
+                    GraphControl?.DeselectAll();
+                }
+
+                Selected = true;
+            }
 
             if (e.Button == MouseButtons.Left)
             {
-                MouseDownLocation = e.Location;
+                _mouseDownLocation = e.Location;
+
+                if (ModifierKeys.HasFlag(Keys.Shift) == true)
+                {
+                    Selected = !Selected;
+                }
+                else
+                {
+                    GraphControl?.DeselectAll();
+                    Selected = true;
+                }
             }
 
             VertexIcon.Invalidate();
@@ -48,8 +79,8 @@ namespace LW5
                 {
                     if (selectedControl is UserControl selected)
                     {
-                        selected.Left += e.Location.X - MouseDownLocation.X;
-                        selected.Top += e.Location.Y - MouseDownLocation.Y;
+                        selected.Left += e.Location.X - _mouseDownLocation.X;
+                        selected.Top += e.Location.Y - _mouseDownLocation.Y;
                     }
                 }
 
@@ -67,29 +98,22 @@ namespace LW5
             {
                 Vertex.Color = GraphControl.InputColorDialog.Color;
                 VertexIcon.Invalidate();
+                UpdateToolTip();
             }
         }
         private void DeleteMenuItem_Click(object sender, EventArgs e)
         {
             Delete();
         }
-
-        public void Delete()
-        {
-            // check for incident edges referencing this
-            GraphControl?.Graph.DeleteVertex(Vertex);
-            Dispose();
-        }
-
         private void VertexIcon_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
             Rectangle drawingBounds = new(
-                Styles.SelectionThickness / 2,
-                Styles.SelectionThickness / 2,
-                VertexIcon.Width - Styles.SelectionThickness - 1,
-                VertexIcon.Height - Styles.SelectionThickness - 1);
+                SelectionThickness / 2,
+                SelectionThickness / 2,
+                VertexIcon.Width - SelectionThickness - 1,
+                VertexIcon.Height - SelectionThickness - 1);
 
             e.Graphics.FillEllipse(
                     new SolidBrush(Vertex.Color),
@@ -100,10 +124,15 @@ namespace LW5
             if (Selected)
             {
                 e.Graphics.DrawEllipse(
-                    new Pen(Styles.SelectedColor, Styles.SelectionThickness),
+                    new Pen(SelectedColor, SelectionThickness),
                     drawingBounds
                     );
             }
+        }
+        private void RenameMenuItem_Click(object sender, EventArgs e)
+        {
+            Vertex.Identifier = Interaction.InputBox(string.Empty, VertexRenameWindowTitleText, Vertex.Identifier);
+            UpdateToolTip();
         }
     }
 }

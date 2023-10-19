@@ -1,6 +1,8 @@
 ﻿using LW5.Logic;
 using LW5.UserInterface;
 
+using static LW5.UserInterface.Styles;
+
 namespace LW5
 {
     public partial class GraphEditor : Form
@@ -27,24 +29,27 @@ namespace LW5
         {
             InitializeComponent();
         }
-
-        private void GraphEditor_Load(object sender, EventArgs e)
-        {
-            CreateNewTab();
-        }
-
         private void CreateNewTab()
         {
-            var graphLayout = new GraphControl();
-            graphLayout.Dock = DockStyle.Fill;
-            graphLayout.Name = "graphLayout";
+            var graphLayout = new GraphControl()
+            {
+                Dock = DockStyle.Fill,
+                Name = "graphLayout"
+            };
 
-            TabPage newTab = new();
-            newTab.Text = Styles.DefaultFileName;
+            TabPage newTab = new()
+            {
+                Text = DefaultFileName
+            };
             newTab.Controls.Add(graphLayout);
 
             OpenedFilesTabs.TabPages.Add(newTab);
             OpenedFilesTabs.SelectTab(newTab);
+        }
+
+        private void GraphEditor_Load(object sender, EventArgs e)
+        {
+            CreateNewTab();
         }
 
         private void CreateMenuItem_Click(object sender, EventArgs e)
@@ -62,7 +67,7 @@ namespace LW5
 
         private void InfoMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(Styles.ProgramDescriptionText, Styles.ProgramDescriptionWindowText);
+            MessageBox.Show(ProgramDescriptionText, ProgramDescriptionWindowText);
         }
     }
 }
