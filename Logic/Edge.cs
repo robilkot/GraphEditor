@@ -5,7 +5,9 @@
     {
         public EdgeType EdgeType { get; set; } = EdgeType.Default;
         public int Weight { get; set; } = 0;
-        public Tuple<GraphObject, GraphObject>? ConnectedObjects { get; set; } = null;
+
+        public GraphObject? First { get; set; } = null;
+        public GraphObject? Second { get; set; } = null;
         public bool ReversedDirection { get; set; } = false;
     }
 }

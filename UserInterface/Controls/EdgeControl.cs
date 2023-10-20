@@ -8,6 +8,7 @@ namespace LW5.UserInterface
     {
         public GraphControl? GraphControl { get => Parent as GraphControl; }
         public Edge Edge { get; init; } = new();
+        //todo: connect two graphObject. Create abstract graphObjectControl
         public bool Selected { get; set; }
         public EdgeControl()
         {

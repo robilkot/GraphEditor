@@ -36,6 +36,7 @@ namespace LW5.UserInterface
                 InitializeControls();
             }
         }
+        public bool CreatingEdge { get; private set; } = false;
 
         public GraphControl()
         {
@@ -82,7 +83,7 @@ namespace LW5.UserInterface
                 }
             }
         }
-        private void CreateVertex(Point location)
+        public void CreateVertex(Point location)
         {
             Vertex vertex = new();
             _graph.Vertices.Add(vertex);
@@ -91,6 +92,25 @@ namespace LW5.UserInterface
             {
                 Vertex = vertex,
                 Location = location
+            };
+
+            Controls.Add(control);
+        }
+
+        public void CreateEdge(VertexControl vertexControl)
+        {
+            CreatingEdge = true;
+
+            Edge edge = new();
+            _graph.Edges.Add(edge);
+
+            edge.First = vertexControl.Vertex;
+            edge.Second = vertexControl.Vertex;
+
+            var control = new EdgeControl()
+            {
+                Edge = edge,
+                Location = vertexControl.Location
             };
 
             Controls.Add(control);

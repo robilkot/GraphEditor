@@ -14,6 +14,7 @@ namespace LW5
         public GraphControl? GraphControl { get => Parent as GraphControl; }
         public Vertex Vertex { get; set; } = new();
         public bool Selected { get; set; }
+        private bool _mouseHovering = false;
 
         private Point _mouseDownLocation;
         public VertexControl()
@@ -121,6 +122,14 @@ namespace LW5
                     drawingBounds
                     );
 
+            if (_mouseHovering)
+            {
+                e.Graphics.DrawEllipse(
+                        new Pen(HoverColor, SelectionThickness),
+                        drawingBounds
+                        );
+            }
+
             if (Selected)
             {
                 e.Graphics.DrawEllipse(
@@ -133,6 +142,24 @@ namespace LW5
         {
             Vertex.Identifier = Interaction.InputBox(string.Empty, VertexRenameWindowTitleText, Vertex.Identifier);
             UpdateToolTip();
+        }
+
+        private void CreateEdgeMenuItem_Click(object sender, EventArgs e)
+        {
+            GraphControl.CreateEdge(this);
+            UpdateToolTip();
+        }
+
+        private void VertexControl_MouseEnter(object sender, EventArgs e)
+        {
+            _mouseHovering = true;
+            Invalidate();
+        }
+
+        private void VertexControl_MouseLeave(object sender, EventArgs e)
+        {
+            _mouseHovering = false;
+            Invalidate();
         }
     }
 }

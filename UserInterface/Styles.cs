@@ -7,6 +7,7 @@ namespace LW5.UserInterface
         public static readonly Font VertexNameFont = new("Segoe UI", 9);
 
         public static readonly Color SelectedColor = Color.DodgerBlue;
+        public static readonly Color HoverColor = Color.LightSkyBlue;
 
         //public const int VertexBoundsThickness = 6;
         public const int VertexDiameter = 48;
@@ -20,5 +21,10 @@ namespace LW5.UserInterface
         public const string ProgramDescriptionWindowText = "Описание программы";
         public const string ProgramDescriptionText = "Графовый редактор, сделанный в рамках лабороторной работы 5 по дисциплине ОТИС.\n\nWith love by @robilkot.";
         public static string ToRGBString(this Color color) => $"R {color.R}, G {color.G}, B {color.B}";
+
+        public static Point Center(this UserControl control) => new(
+            control.Left + control.Width / 2,
+            control.Top + control.Height / 2
+            );
     }
 }

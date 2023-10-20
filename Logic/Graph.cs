@@ -10,13 +10,13 @@
         public void DeleteVertex(Vertex vertex)
         {
             Vertices.Remove(vertex);
-            Edges.RemoveAll(e=> e.ConnectedObjects?.Item1 == vertex || e.ConnectedObjects?.Item2 == vertex);
+            Edges.RemoveAll(e=> e.First == vertex || e.Second == vertex);
         }
 
         public void DeleteEdge(Edge edge)
         {
             Edges.Remove(edge);
-            Edges.RemoveAll(e => e.ConnectedObjects?.Item1 == edge || e.ConnectedObjects?.Item2 == edge);
+            Edges.RemoveAll(e => e.First == edge || e.Second == edge);
         }
     }
 }

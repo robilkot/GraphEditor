@@ -28,99 +28,98 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
-            this.VertexContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
-            this.RenameMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ChangeColorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.CreateEdgeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ExcludeMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.DeleteMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.VertexIcon = new System.Windows.Forms.Panel();
-            this.VertexToolTip = new System.Windows.Forms.ToolTip(this.components);
-            this.VertexContextMenu.SuspendLayout();
-            this.SuspendLayout();
+            components = new System.ComponentModel.Container();
+            VertexContextMenu = new ContextMenuStrip(components);
+            RenameMenuItem = new ToolStripMenuItem();
+            ChangeColorMenuItem = new ToolStripMenuItem();
+            CreateEdgeMenuItem = new ToolStripMenuItem();
+            ExcludeMenuItem = new ToolStripMenuItem();
+            DeleteMenuItem = new ToolStripMenuItem();
+            VertexIcon = new Panel();
+            VertexToolTip = new ToolTip(components);
+            VertexContextMenu.SuspendLayout();
+            SuspendLayout();
             // 
             // VertexContextMenu
             // 
-            this.VertexContextMenu.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.VertexContextMenu.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.RenameMenuItem,
-            this.ChangeColorMenuItem,
-            this.CreateEdgeMenuItem,
-            this.ExcludeMenuItem,
-            this.DeleteMenuItem});
-            this.VertexContextMenu.Name = "contextMenuStrip1";
-            this.VertexContextMenu.Size = new System.Drawing.Size(259, 124);
+            VertexContextMenu.ImageScalingSize = new Size(20, 20);
+            VertexContextMenu.Items.AddRange(new ToolStripItem[] { RenameMenuItem, ChangeColorMenuItem, CreateEdgeMenuItem, ExcludeMenuItem, DeleteMenuItem });
+            VertexContextMenu.Name = "contextMenuStrip1";
+            VertexContextMenu.Size = new Size(294, 164);
             // 
             // RenameMenuItem
             // 
-            this.RenameMenuItem.Name = "RenameMenuItem";
-            this.RenameMenuItem.Size = new System.Drawing.Size(258, 24);
-            this.RenameMenuItem.Text = "Изменить идентификатор";
-            this.RenameMenuItem.Click += new System.EventHandler(this.RenameMenuItem_Click);
+            RenameMenuItem.Name = "RenameMenuItem";
+            RenameMenuItem.Size = new Size(293, 32);
+            RenameMenuItem.Text = "Изменить идентификатор";
+            RenameMenuItem.Click += RenameMenuItem_Click;
             // 
             // ChangeColorMenuItem
             // 
-            this.ChangeColorMenuItem.Name = "ChangeColorMenuItem";
-            this.ChangeColorMenuItem.Size = new System.Drawing.Size(258, 24);
-            this.ChangeColorMenuItem.Text = "Изменить цвет";
-            this.ChangeColorMenuItem.Click += new System.EventHandler(this.ChangeColorMenuItem_Click);
+            ChangeColorMenuItem.Name = "ChangeColorMenuItem";
+            ChangeColorMenuItem.Size = new Size(293, 32);
+            ChangeColorMenuItem.Text = "Изменить цвет";
+            ChangeColorMenuItem.Click += ChangeColorMenuItem_Click;
             // 
             // CreateEdgeMenuItem
             // 
-            this.CreateEdgeMenuItem.Name = "CreateEdgeMenuItem";
-            this.CreateEdgeMenuItem.Size = new System.Drawing.Size(258, 24);
-            this.CreateEdgeMenuItem.Text = "Начать дугу";
+            CreateEdgeMenuItem.Name = "CreateEdgeMenuItem";
+            CreateEdgeMenuItem.Size = new Size(293, 32);
+            CreateEdgeMenuItem.Text = "Начать дугу";
+            CreateEdgeMenuItem.Click += CreateEdgeMenuItem_Click;
             // 
             // ExcludeMenuItem
             // 
-            this.ExcludeMenuItem.Name = "ExcludeMenuItem";
-            this.ExcludeMenuItem.Size = new System.Drawing.Size(258, 24);
-            this.ExcludeMenuItem.Text = "Исключить";
+            ExcludeMenuItem.Name = "ExcludeMenuItem";
+            ExcludeMenuItem.Size = new Size(293, 32);
+            ExcludeMenuItem.Text = "Исключить";
             // 
             // DeleteMenuItem
             // 
-            this.DeleteMenuItem.Name = "DeleteMenuItem";
-            this.DeleteMenuItem.Size = new System.Drawing.Size(258, 24);
-            this.DeleteMenuItem.Text = "Удалить";
-            this.DeleteMenuItem.Click += new System.EventHandler(this.DeleteMenuItem_Click);
+            DeleteMenuItem.Name = "DeleteMenuItem";
+            DeleteMenuItem.Size = new Size(293, 32);
+            DeleteMenuItem.Text = "Удалить";
+            DeleteMenuItem.Click += DeleteMenuItem_Click;
             // 
             // VertexIcon
             // 
-            this.VertexIcon.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.VertexIcon.Location = new System.Drawing.Point(0, 0);
-            this.VertexIcon.Name = "VertexIcon";
-            this.VertexIcon.Size = new System.Drawing.Size(35, 35);
-            this.VertexIcon.TabIndex = 1;
-            this.VertexIcon.Paint += new System.Windows.Forms.PaintEventHandler(this.VertexIcon_Paint);
-            this.VertexIcon.MouseDown += new System.Windows.Forms.MouseEventHandler(this.VertexControl_MouseDown);
-            this.VertexIcon.MouseMove += new System.Windows.Forms.MouseEventHandler(this.VertexControl_MouseMove);
+            VertexIcon.Dock = DockStyle.Fill;
+            VertexIcon.Location = new Point(0, 0);
+            VertexIcon.Name = "VertexIcon";
+            VertexIcon.Size = new Size(35, 35);
+            VertexIcon.TabIndex = 1;
+            VertexIcon.Paint += VertexIcon_Paint;
+            VertexIcon.MouseDown += VertexControl_MouseDown;
+            VertexIcon.MouseEnter += VertexControl_MouseEnter;
+            VertexIcon.MouseLeave += VertexControl_MouseLeave;
+            VertexIcon.MouseMove += VertexControl_MouseMove;
             // 
             // VertexToolTip
             // 
-            this.VertexToolTip.AutoPopDelay = 5000;
-            this.VertexToolTip.InitialDelay = 100;
-            this.VertexToolTip.ReshowDelay = 100;
-            this.VertexToolTip.ToolTipIcon = System.Windows.Forms.ToolTipIcon.Info;
-            this.VertexToolTip.ToolTipTitle = "Вершина";
+            VertexToolTip.AutoPopDelay = 5000;
+            VertexToolTip.InitialDelay = 100;
+            VertexToolTip.ReshowDelay = 100;
+            VertexToolTip.ToolTipIcon = ToolTipIcon.Info;
+            VertexToolTip.ToolTipTitle = "Вершина";
             // 
             // VertexControl
             // 
-            this.BackColor = System.Drawing.Color.Transparent;
-            this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ContextMenuStrip = this.VertexContextMenu;
-            this.Controls.Add(this.VertexIcon);
-            this.Cursor = System.Windows.Forms.Cursors.SizeAll;
-            this.DoubleBuffered = true;
-            this.Margin = new System.Windows.Forms.Padding(0);
-            this.Name = "VertexControl";
-            this.Size = new System.Drawing.Size(35, 35);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.VertexControl_Paint);
-            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.VertexControl_MouseDown);
-            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.VertexControl_MouseMove);
-            this.VertexContextMenu.ResumeLayout(false);
-            this.ResumeLayout(false);
-
+            BackColor = Color.Transparent;
+            BackgroundImageLayout = ImageLayout.None;
+            ContextMenuStrip = VertexContextMenu;
+            Controls.Add(VertexIcon);
+            Cursor = Cursors.SizeAll;
+            DoubleBuffered = true;
+            Margin = new Padding(0);
+            Name = "VertexControl";
+            Size = new Size(35, 35);
+            Paint += VertexControl_Paint;
+            MouseDown += VertexControl_MouseDown;
+            MouseEnter += VertexControl_MouseEnter;
+            MouseLeave += VertexControl_MouseLeave;
+            MouseMove += VertexControl_MouseMove;
+            VertexContextMenu.ResumeLayout(false);
+            ResumeLayout(false);
         }
 
         #endregion
