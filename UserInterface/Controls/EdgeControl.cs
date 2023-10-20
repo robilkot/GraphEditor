@@ -4,27 +4,17 @@ using static LW5.UserInterface.Styles;
 
 namespace LW5.UserInterface
 {
-    public partial class EdgeControl : UserControl, ISelectable, IDeletable
+    public partial class EdgeControl : GraphObjectControl
     {
-        public GraphControl? GraphControl { get => Parent as GraphControl; }
-        public Edge Edge { get; init; } = new();
-        //todo: connect two graphObject. Create abstract graphObjectControl
-        public bool Selected { get; set; }
         public EdgeControl()
         {
             InitializeComponent();
-        }
-        public void Delete()
-        {
-            // check for incident edges referencing this
-            GraphControl?.Graph.DeleteEdge(Edge);
-            Dispose();
         }
         private void ChangeColorMenuItem_Click(object sender, EventArgs e)
         {
             if (GraphControl?.InputColorDialog.ShowDialog() == DialogResult.OK)
             {
-                Edge.Color = GraphControl.InputColorDialog.Color;
+                Element.Color = GraphControl.InputColorDialog.Color;
                 Refresh();
             }
         }

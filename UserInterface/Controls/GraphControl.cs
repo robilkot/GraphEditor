@@ -25,6 +25,7 @@ namespace LW5.UserInterface
                 return selected;
             }
         }
+
         private Graph _graph = new();
         public Graph Graph
         {
@@ -49,10 +50,24 @@ namespace LW5.UserInterface
             Controls.Clear();
             Point newControlLocation = new(Width / 2, Height / 2);
 
-            foreach (var vertex in _graph.Vertices)
+            foreach (var element in _graph.Elements)
             {
-                var control = new VertexControl();
-                control.Vertex = vertex;
+                GraphObjectControl control;
+
+                if (element is Vertex)
+                {
+                    control = new VertexControl()
+                    {
+                        Element = element
+                    };
+                }// else if(element is Edge)
+                else
+                {
+                    control = new EdgeControl()
+                    {
+                        Element = element
+                    };
+                }
 
                 control.Location = newControlLocation;
                 Controls.Add(control);
@@ -86,34 +101,39 @@ namespace LW5.UserInterface
         public void CreateVertex(Point location)
         {
             Vertex vertex = new();
-            _graph.Vertices.Add(vertex);
+            _graph.Add(vertex);
 
             var control = new VertexControl()
             {
-                Vertex = vertex,
+                Element = vertex,
                 Location = location
             };
 
             Controls.Add(control);
         }
 
-        public void CreateEdge(VertexControl vertexControl)
+        public void Remove(GraphObjectControl control)
+        {
+            Controls.Remove(control);
+            _graph.Remove(control.Element);
+        }
+        public void CreateEdge(GraphObjectControl control)
         {
             CreatingEdge = true;
 
             Edge edge = new();
-            _graph.Edges.Add(edge);
+            _graph.Add(edge);
 
-            edge.First = vertexControl.Vertex;
-            edge.Second = vertexControl.Vertex;
+            edge.First = control.Element;
+            edge.Second = control.Element;
 
-            var control = new EdgeControl()
+            var edgeControl = new EdgeControl()
             {
-                Edge = edge,
-                Location = vertexControl.Location
+                Element = edge,
+                Location = control.Location
             };
 
-            Controls.Add(control);
+            Controls.Add(edgeControl);
         }
 
         private void CreateVertexMenuItem_Click(object sender, EventArgs e)

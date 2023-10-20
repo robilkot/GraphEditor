@@ -1,22 +1,19 @@
 ﻿namespace LW5.Logic
 {
     [Serializable]
-    public class Graph : GraphObject
+    public class Graph
     {
-        public List<Vertex> Vertices { get; set; } = new();
-        public List<Edge> Edges { get; set; } = new();
-        public int Size => Vertices.Count;
+        public List<GraphObject> Elements { get; set; } = new();
+        public int Size => Elements.Where(e => e is Vertex).Count();
 
-        public void DeleteVertex(Vertex vertex)
+        public void Add(GraphObject graphObject)
         {
-            Vertices.Remove(vertex);
-            Edges.RemoveAll(e=> e.First == vertex || e.Second == vertex);
+            Elements.Add(graphObject);
         }
-
-        public void DeleteEdge(Edge edge)
+        public void Remove(GraphObject graphObject)
         {
-            Edges.Remove(edge);
-            Edges.RemoveAll(e => e.First == edge || e.Second == edge);
+            Elements.Remove(graphObject);
+            Elements.RemoveAll(e => e is Edge edge && (edge.First == graphObject || edge.Second == graphObject));
         }
     }
 }

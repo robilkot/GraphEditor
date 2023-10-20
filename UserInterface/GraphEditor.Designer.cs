@@ -114,8 +114,8 @@
             // редактированиеToolStripMenuItem
             // 
             this.редактированиеToolStripMenuItem.Name = "редактированиеToolStripMenuItem";
-            this.редактированиеToolStripMenuItem.Size = new System.Drawing.Size(137, 24);
-            this.редактированиеToolStripMenuItem.Text = "Редактирование";
+            this.редактированиеToolStripMenuItem.Size = new System.Drawing.Size(74, 24);
+            this.редактированиеToolStripMenuItem.Text = "Правка";
             // 
             // InfoMenuItem
             // 
@@ -126,12 +126,12 @@
             // 
             // GraphEditor
             // 
-            this.AllowDrop = true;
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1262, 673);
             this.Controls.Add(this.OpenedFilesTabs);
             this.Controls.Add(this.MenuStrip);
+            this.HelpButton = true;
             this.MainMenuStrip = this.MenuStrip;
             this.Margin = new System.Windows.Forms.Padding(2);
             this.MinimumSize = new System.Drawing.Size(900, 450);

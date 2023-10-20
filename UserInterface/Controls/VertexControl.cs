@@ -9,36 +9,23 @@ using static LW5.UserInterface.Styles;
 namespace LW5
 {
     [Serializable]
-    public partial class VertexControl : UserControl, ISelectable, IDeletable
+    public partial class VertexControl : GraphObjectControl
     {
-        public GraphControl? GraphControl { get => Parent as GraphControl; }
-        public Vertex Vertex { get; set; } = new();
-        public bool Selected { get; set; }
-        private bool _mouseHovering = false;
-
         private Point _mouseDownLocation;
         public VertexControl()
         {
             InitializeComponent();
             Width = VertexDiameter;
             Height = VertexDiameter;
-            UpdateToolTip();
 
             typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty
             | BindingFlags.Instance | BindingFlags.NonPublic, null,
             VertexIcon, new object[] { true });
         }
-        public void Delete()
-        {
-            // check for incident edges referencing this
-            GraphControl?.Graph.DeleteVertex(Vertex);
-            Dispose();
-        }
-
         private void UpdateToolTip()
         {
-            string newText = string.Format(VertexToolTipText, Vertex.Color.ToRGBString());
-            VertexToolTip.ToolTipTitle = Vertex.Identifier;
+            string newText = string.Format(VertexToolTipText, Element.Color.ToRGBString());
+            VertexToolTip.ToolTipTitle = Element.Identifier;
 
             VertexToolTip.SetToolTip(VertexIcon, newText);
         }
@@ -97,7 +84,7 @@ namespace LW5
         {
             if (GraphControl?.InputColorDialog.ShowDialog() == DialogResult.OK)
             {
-                Vertex.Color = GraphControl.InputColorDialog.Color;
+                Element.Color = GraphControl.InputColorDialog.Color;
                 VertexIcon.Invalidate();
                 UpdateToolTip();
             }
@@ -117,8 +104,7 @@ namespace LW5
                 VertexIcon.Height - SelectionThickness - 1);
 
             e.Graphics.FillEllipse(
-                    new SolidBrush(Vertex.Color),
-                    //new Pen(Vertex.Color, Styles.VertexBoundsThickness),
+                    new SolidBrush(Element.Color),
                     drawingBounds
                     );
 
@@ -140,13 +126,13 @@ namespace LW5
         }
         private void RenameMenuItem_Click(object sender, EventArgs e)
         {
-            Vertex.Identifier = Interaction.InputBox(string.Empty, VertexRenameWindowTitleText, Vertex.Identifier);
+            Element.Identifier = Interaction.InputBox(string.Empty, VertexRenameWindowTitleText, Element.Identifier);
             UpdateToolTip();
         }
 
         private void CreateEdgeMenuItem_Click(object sender, EventArgs e)
         {
-            GraphControl.CreateEdge(this);
+            GraphControl?.CreateEdge(this);
             UpdateToolTip();
         }
 
@@ -154,6 +140,8 @@ namespace LW5
         {
             _mouseHovering = true;
             Invalidate();
+
+            UpdateToolTip();
         }
 
         private void VertexControl_MouseLeave(object sender, EventArgs e)
