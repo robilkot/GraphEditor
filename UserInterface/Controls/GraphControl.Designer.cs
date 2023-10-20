@@ -46,26 +46,29 @@
             this.DeleteSelectedMenuItem});
             this.LayoutContextMenu.Name = "LayoutContextMenu";
             this.LayoutContextMenu.ShowImageMargin = false;
-            this.LayoutContextMenu.Size = new System.Drawing.Size(200, 76);
+            this.LayoutContextMenu.Size = new System.Drawing.Size(234, 76);
             // 
             // CreateVertexMenuItem
             // 
             this.CreateVertexMenuItem.Name = "CreateVertexMenuItem";
-            this.CreateVertexMenuItem.Size = new System.Drawing.Size(199, 24);
+            this.CreateVertexMenuItem.ShortcutKeyDisplayString = "Shift+A";
+            this.CreateVertexMenuItem.Size = new System.Drawing.Size(233, 24);
             this.CreateVertexMenuItem.Text = "Создать вершину";
             this.CreateVertexMenuItem.Click += new System.EventHandler(this.CreateVertexMenuItem_Click);
             // 
             // SelectAllMenuItem
             // 
             this.SelectAllMenuItem.Name = "SelectAllMenuItem";
-            this.SelectAllMenuItem.Size = new System.Drawing.Size(199, 24);
+            this.SelectAllMenuItem.ShortcutKeyDisplayString = "Ctrl+A";
+            this.SelectAllMenuItem.Size = new System.Drawing.Size(233, 24);
             this.SelectAllMenuItem.Text = "Выделить всё";
             this.SelectAllMenuItem.Click += new System.EventHandler(this.SelectAllMenuItem_Click);
             // 
             // DeleteSelectedMenuItem
             // 
             this.DeleteSelectedMenuItem.Name = "DeleteSelectedMenuItem";
-            this.DeleteSelectedMenuItem.Size = new System.Drawing.Size(199, 24);
+            this.DeleteSelectedMenuItem.ShortcutKeyDisplayString = "Del";
+            this.DeleteSelectedMenuItem.Size = new System.Drawing.Size(233, 24);
             this.DeleteSelectedMenuItem.Text = "Удалить выделенное";
             this.DeleteSelectedMenuItem.Click += new System.EventHandler(this.DeleteSelectedMenuItem_Click);
             // 
@@ -75,10 +78,15 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.ContextMenuStrip = this.LayoutContextMenu;
+            this.DoubleBuffered = true;
             this.Name = "GraphControl";
             this.Size = new System.Drawing.Size(757, 500);
             this.Click += new System.EventHandler(this.GraphControl_Click);
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.GraphControl_Paint);
             this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.GraphControl_MouseDoubleClick);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GraphControl_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GraphControl_MouseMove);
+            this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.GraphControl_MouseUp);
             this.LayoutContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 

@@ -82,33 +82,35 @@
             // CreateMenuItem
             // 
             this.CreateMenuItem.Name = "CreateMenuItem";
-            this.CreateMenuItem.Size = new System.Drawing.Size(192, 26);
+            this.CreateMenuItem.ShortcutKeyDisplayString = "Ctrl+N";
+            this.CreateMenuItem.Size = new System.Drawing.Size(224, 26);
             this.CreateMenuItem.Text = "Создать";
             this.CreateMenuItem.Click += new System.EventHandler(this.CreateMenuItem_Click);
             // 
             // OpenMenuItem
             // 
             this.OpenMenuItem.Name = "OpenMenuItem";
-            this.OpenMenuItem.Size = new System.Drawing.Size(192, 26);
+            this.OpenMenuItem.Size = new System.Drawing.Size(224, 26);
             this.OpenMenuItem.Text = "Открыть";
             // 
             // CloseMenuItem
             // 
             this.CloseMenuItem.Name = "CloseMenuItem";
-            this.CloseMenuItem.Size = new System.Drawing.Size(192, 26);
+            this.CloseMenuItem.ShortcutKeyDisplayString = "Ctrl+W";
+            this.CloseMenuItem.Size = new System.Drawing.Size(224, 26);
             this.CloseMenuItem.Text = "Закрыть";
             this.CloseMenuItem.Click += new System.EventHandler(this.CloseMenuItem_Click);
             // 
             // SaveMenuItem
             // 
             this.SaveMenuItem.Name = "SaveMenuItem";
-            this.SaveMenuItem.Size = new System.Drawing.Size(192, 26);
+            this.SaveMenuItem.Size = new System.Drawing.Size(224, 26);
             this.SaveMenuItem.Text = "Сохранить";
             // 
             // SaveAsMenuItem
             // 
             this.SaveAsMenuItem.Name = "SaveAsMenuItem";
-            this.SaveAsMenuItem.Size = new System.Drawing.Size(192, 26);
+            this.SaveAsMenuItem.Size = new System.Drawing.Size(224, 26);
             this.SaveAsMenuItem.Text = "Сохранить как";
             // 
             // редактированиеToolStripMenuItem

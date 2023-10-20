@@ -4,6 +4,6 @@
     abstract public class GraphObject
     {
         public string Identifier { get; set; } = string.Empty;
-        public Color Color { get; set; } = Color.Black;
+        public Color Color { get; set; } = Color.DimGray;
     }
 }

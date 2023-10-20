@@ -1,4 +1,4 @@
-﻿namespace LW5
+﻿namespace LW5.UserInterface
 {
     partial class VertexControl
     {

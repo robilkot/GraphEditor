@@ -10,14 +10,5 @@ namespace LW5.UserInterface
         {
             InitializeComponent();
         }
-        private void ChangeColorMenuItem_Click(object sender, EventArgs e)
-        {
-            if (GraphControl?.InputColorDialog.ShowDialog() == DialogResult.OK)
-            {
-                Element.Color = GraphControl.InputColorDialog.Color;
-                Refresh();
-            }
-        }
-
     }
 }

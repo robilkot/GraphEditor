@@ -1,4 +1,6 @@
-﻿namespace LW5.UserInterface
+﻿using System.Windows.Forms;
+
+namespace LW5.UserInterface
 {
     public static class Styles
     {
@@ -6,9 +8,12 @@
 
         public static readonly Color SelectedColor = Color.DodgerBlue;
         public static readonly Color HoverColor = Color.LightSkyBlue;
+        public static readonly Color SelectionRectangleColor = Color.DodgerBlue;
+
+        public static readonly SolidBrush SelectionRectangleBrush = new SolidBrush(Color.FromArgb(64, SelectionRectangleColor));
 
         //public const int VertexBoundsThickness = 6;
-        public const int VertexDiameter = 48;
+        public const int VertexDiameter = 36;
         public const int SelectionThickness = 4;
 
         public const string DefaultFileName = "Новый граф";

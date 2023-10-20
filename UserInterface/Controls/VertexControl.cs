@@ -6,7 +6,7 @@ using System.Reflection;
 
 using static LW5.UserInterface.Styles;
 
-namespace LW5
+namespace LW5.UserInterface
 {
     [Serializable]
     public partial class VertexControl : GraphObjectControl
