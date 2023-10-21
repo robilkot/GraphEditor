@@ -1,7 +1,4 @@
-﻿using LW5.Logic;
-using LW5.UserInterface;
-using Microsoft.VisualBasic;
-using System.Drawing.Drawing2D;
+﻿using Microsoft.VisualBasic;
 using System.Reflection;
 
 using static LW5.UserInterface.Styles;
@@ -20,9 +17,9 @@ namespace LW5.UserInterface
             Width = VertexDiameter;
             Height = VertexDiameter;
 
-            typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty
-            | BindingFlags.Instance | BindingFlags.NonPublic, null,
-            VertexIcon, new object[] { true });
+            //typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty
+            //| BindingFlags.Instance | BindingFlags.NonPublic, null,
+            //VertexIcon, new object[] { true });
         }
         private void UpdateToolTip()
         {
@@ -64,7 +61,7 @@ namespace LW5.UserInterface
                     Selected = true;
                 }
 
-                if(GraphControl.CreatingEdge)
+                if (GraphControl.CreatingEdge)
                 {
                     GraphControl.FinishCreatingEdge(this);
                 }
@@ -89,13 +86,13 @@ namespace LW5.UserInterface
                 VertexIcon.Invalidate();
             }
         }
-        private void VertexControl_Paint(object sender, PaintEventArgs e)
-        {
-            foreach(EdgeControl control in IncidentEdgeControls)
-            {
-                control.Invalidate();
-            }
-        }
+        //private void VertexControl_Paint(object sender, PaintEventArgs e)
+        //{
+        //    foreach (EdgeControl control in IncidentEdgeControls)
+        //    {
+        //        control.Invalidate();
+        //    }
+        //}
         private void ChangeColorMenuItem_Click(object sender, EventArgs e)
         {
             if (GraphControl?.InputColorDialog.ShowDialog() == DialogResult.OK)
@@ -109,20 +106,29 @@ namespace LW5.UserInterface
         {
             Delete();
         }
-        private void VertexIcon_Paint(object sender, PaintEventArgs e)
-        {
-            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+        //private void VertexIcon_Paint(object sender, PaintEventArgs e)
+        //{
+        //    //e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
+        //    //GraphControl.Invalidate();
+        //    //Draw(e);
+        //}
+
+        public override void Draw(PaintEventArgs e)
+        {
             Rectangle drawingBounds = new(
-                SelectionThickness / 2,
-                SelectionThickness / 2,
+                Location.X + SelectionThickness / 2,
+                Location.Y + SelectionThickness / 2,
                 VertexIcon.Width - SelectionThickness - 1,
                 VertexIcon.Height - SelectionThickness - 1);
 
-            e.Graphics.FillEllipse(
-                    new SolidBrush(Element.Color),
-                    drawingBounds
-                    );
+            using (SolidBrush brush = new(Element.Color))
+            {
+                e.Graphics.FillEllipse(
+                            brush,
+                            drawingBounds
+                            );
+            }
 
             if (_mouseHovering)
             {

@@ -34,7 +34,7 @@ namespace LW5.UserInterface
         private bool _selecting = false;
         private Rectangle _selectionRectangle = new();
 
-        private EdgeControl _edgeControlToBeCreated;
+        private EdgeControl _edgeControlToBeCreated = new();
         private bool _creatingEdge = false;
         public bool CreatingEdge { get => _creatingEdge; }
 
@@ -94,17 +94,18 @@ namespace LW5.UserInterface
                 if (control is ISelectable selectable)
                 {
                     selectable.Selected = true;
-                    control.Invalidate();
                 }
             }
+            Invalidate();
         }
         public void DeselectAll()
         {
             foreach (var selected in Selected)
             {
                 selected.Selected = false;
-                ((UserControl)selected).Invalidate();
+                //((UserControl)selected).Invalidate();
             }
+            Invalidate();
         }
         public void CreateVertex(Point location)
         {
@@ -129,9 +130,11 @@ namespace LW5.UserInterface
         {
             _creatingEdge = true;
 
-            Edge edge = new();
+            Edge edge = new()
+            {
+                First = sourceControl.Element
+            };
 
-            edge.First = sourceControl.Element;
             ((Vertex)sourceControl.Element).IncidentEdges.Add(edge);
             _graph.Add(edge);
 
@@ -158,7 +161,6 @@ namespace LW5.UserInterface
 
             Controls.Add(_edgeControlToBeCreated);
             _creatingEdge = false;
-
 
             Invalidate();
         }
@@ -223,7 +225,30 @@ namespace LW5.UserInterface
         private void GraphControl_Paint(object sender, PaintEventArgs e)
         {
             // todo: move to init. mb create setting for graphics quality
-            e.Graphics.SmoothingMode = SmoothingMode.HighSpeed;
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+
+            // Two cycles to render vertices after edges. Screw that
+            //foreach(UserControl control in Controls)
+            //{
+            //    if (control is EdgeControl)
+            //    {
+            //        ((IDrawable)control).Draw(e);
+            //    }
+            //}
+            //foreach (UserControl control in Controls)
+            //{
+            //    if(control is VertexControl)
+            //    {
+            //        ((IDrawable)control).Draw(e);
+            //    }
+            //}
+            foreach (UserControl control in Controls)
+            {
+                if (control is IDrawable drawable)
+                {
+                    drawable.Draw(e);
+                }
+            }
 
             if (_selecting)
             {

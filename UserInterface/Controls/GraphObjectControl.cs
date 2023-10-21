@@ -2,7 +2,7 @@
 
 namespace LW5.UserInterface
 {
-    public /*abstract */class GraphObjectControl : UserControl, ISelectable, IDeletable
+    public abstract class GraphObjectControl : UserControl, ISelectable, IDeletable, IDrawable
     {
 
         public GraphControl? GraphControl { get => Parent as GraphControl; }
@@ -24,5 +24,7 @@ namespace LW5.UserInterface
             Name = "GraphObjectControl";
             ResumeLayout(false);
         }
+
+        public abstract void Draw(PaintEventArgs e);
     }
 }

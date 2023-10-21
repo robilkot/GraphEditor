@@ -93,7 +93,6 @@
             this.VertexIcon.Name = "VertexIcon";
             this.VertexIcon.Size = new System.Drawing.Size(35, 35);
             this.VertexIcon.TabIndex = 1;
-            this.VertexIcon.Paint += new System.Windows.Forms.PaintEventHandler(this.VertexIcon_Paint);
             this.VertexIcon.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.VertexControl_MouseDoubleClick);
             this.VertexIcon.MouseDown += new System.Windows.Forms.MouseEventHandler(this.VertexControl_MouseDown);
             this.VertexIcon.MouseEnter += new System.EventHandler(this.VertexControl_MouseEnter);
@@ -119,7 +118,6 @@
             this.Margin = new System.Windows.Forms.Padding(0);
             this.Name = "VertexControl";
             this.Size = new System.Drawing.Size(35, 35);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.VertexControl_Paint);
             this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.VertexControl_MouseDoubleClick);
             this.VertexContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
