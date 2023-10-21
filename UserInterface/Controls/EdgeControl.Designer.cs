@@ -34,6 +34,7 @@
             this.ChangeColorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ReverseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DeleteMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.EdgeIcon = new System.Windows.Forms.Panel();
             this.EdgeContextMenu.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -46,7 +47,7 @@
             this.ReverseMenuItem,
             this.DeleteMenuItem});
             this.EdgeContextMenu.Name = "contextMenuStrip1";
-            this.EdgeContextMenu.Size = new System.Drawing.Size(259, 100);
+            this.EdgeContextMenu.Size = new System.Drawing.Size(259, 128);
             // 
             // RenameMenuItem
             // 
@@ -71,12 +72,26 @@
             this.DeleteMenuItem.Name = "DeleteMenuItem";
             this.DeleteMenuItem.Size = new System.Drawing.Size(258, 24);
             this.DeleteMenuItem.Text = "Удалить";
+            this.DeleteMenuItem.Click += new System.EventHandler(this.DeleteMenuItem_Click);
+            // 
+            // EdgeIcon
+            // 
+            this.EdgeIcon.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.EdgeIcon.Location = new System.Drawing.Point(0, 0);
+            this.EdgeIcon.Name = "EdgeIcon";
+            this.EdgeIcon.Size = new System.Drawing.Size(150, 150);
+            this.EdgeIcon.TabIndex = 2;
+            this.EdgeIcon.Paint += new System.Windows.Forms.PaintEventHandler(this.EdgeIcon_Paint);
             // 
             // EdgeControl
             // 
-            this.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.BackColor = System.Drawing.Color.Transparent;
             this.ContextMenuStrip = this.EdgeContextMenu;
+            this.Controls.Add(this.EdgeIcon);
             this.Name = "EdgeControl";
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.EdgeControl_Paint);
+            this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.EdgeControl_MouseDown);
+            this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.EdgeControl_MouseMove);
             this.EdgeContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -89,5 +104,6 @@
         private ToolStripMenuItem ChangeColorMenuItem;
         private ToolStripMenuItem ReverseMenuItem;
         private ToolStripMenuItem DeleteMenuItem;
+        private Panel EdgeIcon;
     }
 }

@@ -81,8 +81,8 @@
             this.DoubleBuffered = true;
             this.Name = "GraphControl";
             this.Size = new System.Drawing.Size(757, 500);
-            this.Click += new System.EventHandler(this.GraphControl_Click);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.GraphControl_Paint);
+            this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.GraphControl_MouseClick);
             this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.GraphControl_MouseDoubleClick);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.GraphControl_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.GraphControl_MouseMove);

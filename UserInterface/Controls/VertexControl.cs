@@ -12,6 +12,8 @@ namespace LW5.UserInterface
     public partial class VertexControl : GraphObjectControl
     {
         private Point _mouseDownLocation;
+
+        public List<EdgeControl> IncidentEdgeControls { get; set; } = new();
         public VertexControl()
         {
             InitializeComponent();
@@ -28,6 +30,12 @@ namespace LW5.UserInterface
             VertexToolTip.ToolTipTitle = Element.Identifier;
 
             VertexToolTip.SetToolTip(VertexIcon, newText);
+        }
+
+        private void CreateEdge()
+        {
+            GraphControl?.StartCreatingEdge(this);
+            UpdateToolTip();
         }
         private void VertexControl_MouseDown(object sender, MouseEventArgs e)
         {
@@ -55,6 +63,11 @@ namespace LW5.UserInterface
                     GraphControl?.DeselectAll();
                     Selected = true;
                 }
+
+                if(GraphControl.CreatingEdge)
+                {
+                    GraphControl.FinishCreatingEdge(this);
+                }
             }
 
             VertexIcon.Invalidate();
@@ -78,7 +91,10 @@ namespace LW5.UserInterface
         }
         private void VertexControl_Paint(object sender, PaintEventArgs e)
         {
-            //VertexIcon.Invalidate();
+            foreach(EdgeControl control in IncidentEdgeControls)
+            {
+                control.Invalidate();
+            }
         }
         private void ChangeColorMenuItem_Click(object sender, EventArgs e)
         {
@@ -132,10 +148,8 @@ namespace LW5.UserInterface
 
         private void CreateEdgeMenuItem_Click(object sender, EventArgs e)
         {
-            GraphControl?.CreateEdge(this);
-            UpdateToolTip();
+            CreateEdge();
         }
-
         private void VertexControl_MouseEnter(object sender, EventArgs e)
         {
             _mouseHovering = true;
@@ -148,6 +162,11 @@ namespace LW5.UserInterface
         {
             _mouseHovering = false;
             Invalidate();
+        }
+
+        private void VertexControl_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            CreateEdge();
         }
     }
 }

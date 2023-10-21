@@ -1,4 +1,5 @@
 ﻿using LW5.Logic;
+using System.Drawing.Drawing2D;
 using static LW5.UserInterface.Styles;
 
 namespace LW5.UserInterface
@@ -29,8 +30,13 @@ namespace LW5.UserInterface
 
         private Point _mouseDownLocation;
         private Point _mouseCurrentLocation;
-        private bool _selecting;
+
+        private bool _selecting = false;
         private Rectangle _selectionRectangle = new();
+
+        private EdgeControl _edgeControlToBeCreated;
+        private bool _creatingEdge = false;
+        public bool CreatingEdge { get => _creatingEdge; }
 
         private Graph _graph = new();
         public Graph Graph
@@ -119,25 +125,42 @@ namespace LW5.UserInterface
             Controls.Remove(control);
             _graph.Remove(control.Element);
         }
-        public void CreateEdge(GraphObjectControl sourceControl)
+        public void StartCreatingEdge(VertexControl sourceControl)
         {
-            //CreatingEdge = true;
+            _creatingEdge = true;
 
-            //Edge edge = new();
+            Edge edge = new();
 
-            //_graph.Add(edge);
-            //((Vertex)sourceControl.Element).IncidentEdges.Add(edge);
+            edge.First = sourceControl.Element;
+            ((Vertex)sourceControl.Element).IncidentEdges.Add(edge);
+            _graph.Add(edge);
 
-            //edge.First = sourceControl.Element;
-            //edge.Second = sourceControl.Element;
+            _edgeControlToBeCreated = new()
+            {
+                First = sourceControl,
+                Element = edge,
+                Location = sourceControl.Location
+            };
 
-            //var edgeControl = new EdgeControl()
-            //{
-            //    Element = edge,
-            //    Location = sourceControl.Location
-            //};
+            sourceControl.IncidentEdgeControls.Add(_edgeControlToBeCreated);
+        }
 
-            //Controls.Add(edgeControl);
+        public void FinishCreatingEdge(GraphObjectControl destinationControl)
+        {
+            ((Edge)_edgeControlToBeCreated.Element).Second = destinationControl.Element;
+            _edgeControlToBeCreated.Second = destinationControl;
+
+            if(destinationControl.Element is Vertex vertex)
+            {
+                vertex.IncidentEdges.Add((Edge)_edgeControlToBeCreated.Element);
+                ((VertexControl)destinationControl).IncidentEdgeControls.Add(_edgeControlToBeCreated);
+            }
+
+            Controls.Add(_edgeControlToBeCreated);
+            _creatingEdge = false;
+
+
+            Invalidate();
         }
 
         private void CreateVertexMenuItem_Click(object sender, EventArgs e)
@@ -151,14 +174,6 @@ namespace LW5.UserInterface
         private void SelectAllMenuItem_Click(object sender, EventArgs e)
         {
             SelectAll();
-        }
-
-        private void GraphControl_Click(object sender, EventArgs e)
-        {
-            if (ModifierKeys.HasFlag(Keys.Shift) == false && ModifierKeys.HasFlag(Keys.Control) == false)
-            {
-                DeselectAll();
-            }
         }
 
         private void GraphControl_MouseDoubleClick(object sender, MouseEventArgs e)
@@ -197,13 +212,18 @@ namespace LW5.UserInterface
 
                 _selectionRectangle.Width = Math.Abs(_mouseCurrentLocation.X - _mouseDownLocation.X);
                 _selectionRectangle.Height = Math.Abs(_mouseCurrentLocation.Y - _mouseDownLocation.Y);
-
+            }
+            if (e.Button == MouseButtons.Left || _creatingEdge)
+            {
+                _mouseCurrentLocation = e.Location;
                 Invalidate();
             }
         }
 
         private void GraphControl_Paint(object sender, PaintEventArgs e)
         {
+            // todo: move to init. mb create setting for graphics quality
+            e.Graphics.SmoothingMode = SmoothingMode.HighSpeed;
 
             if (_selecting)
             {
@@ -217,12 +237,25 @@ namespace LW5.UserInterface
                     _selectionRectangle
                     );
             }
+            if (_creatingEdge)
+            {
+                e.Graphics.DrawLine(
+                    Pens.Black,
+                    _edgeControlToBeCreated.First.Center(),
+                    _mouseCurrentLocation
+                    );
+            }
         }
 
         private void GraphControl_MouseDown(object sender, MouseEventArgs e)
         {
             _mouseDownLocation = e.Location;
             _mouseCurrentLocation = e.Location;
+
+            if (e.Button == MouseButtons.Right)
+            {
+                _creatingEdge = false;
+            }
         }
 
         private void GraphControl_MouseUp(object sender, MouseEventArgs e)
@@ -234,7 +267,7 @@ namespace LW5.UserInterface
                 {
                     foreach (var selected in Selected)
                     {
-                        if (_selectionRectangle.Contains(((UserControl)selected).Bounds))
+                        if (_selectionRectangle.IntersectsWith(((UserControl)selected).Bounds))
                         {
                             selected.Selected = false;
                         };
@@ -246,7 +279,7 @@ namespace LW5.UserInterface
                     {
                         if (control is ISelectable selectable)
                         {
-                            if (_selectionRectangle.Contains(control.Bounds))
+                            if (_selectionRectangle.IntersectsWith(control.Bounds))
                             {
                                 selectable.Selected = true;
                             };
@@ -258,6 +291,14 @@ namespace LW5.UserInterface
             _selecting = false;
 
             Invalidate();
+        }
+
+        private void GraphControl_MouseClick(object sender, MouseEventArgs e)
+        {
+            if (ModifierKeys.HasFlag(Keys.Shift) == false && ModifierKeys.HasFlag(Keys.Control) == false)
+            {
+                DeselectAll();
+            }
         }
     }
 }
