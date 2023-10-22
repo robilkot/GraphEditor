@@ -11,10 +11,16 @@ namespace LW5.UserInterface
             InitializeComponent();
         }
 
+        public void Reverse()
+        {
+            (Second, First) = (First, Second);
+            Invalidate();
+        }
         private void EdgeControl_Paint(object sender, PaintEventArgs e)
         {
             if (First == Second)
             {
+                // todo: Move that loopy-shit to styles
                 Left = First.Center().X - 10;
                 Top = First.Center().Y - 10;
                 Width = 50;
@@ -83,9 +89,18 @@ namespace LW5.UserInterface
         {
             Rename();
         }
+        private void ChangeWeightMenuItem_Click(object sender, EventArgs e)
+        {
+            // todo: Input number dialog
+        }
+        
         private void DeleteMenuItem_Click(object sender, EventArgs e)
         {
             Delete();
+        }
+        private void ReverseMenuItem_Click(object sender, EventArgs e)
+        {
+            Reverse();
         }
 
         public override void Draw(PaintEventArgs e)
@@ -105,6 +120,7 @@ namespace LW5.UserInterface
                     e.Graphics.DrawLine(pen, linePoints.Item1, linePoints.Item2);
                 }
             }
+            // todo: Differentiate between oriented and non-oriented edges
         }
     }
 }

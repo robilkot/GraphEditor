@@ -32,6 +32,7 @@
             this.EdgeContextMenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.RenameMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ChangeColorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ChangeWeightMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ReverseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DeleteMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EdgeContextMenu.SuspendLayout();
@@ -44,8 +45,9 @@
             this.RenameMenuItem,
             this.ChangeColorMenuItem,
             this.ReverseMenuItem,
+            this.ChangeWeightMenuItem,
             this.DeleteMenuItem});
-            this.EdgeContextMenu.Name = "contextMenuStrip1";
+            this.EdgeContextMenu.Name = "EdgeContextMenu";
             this.EdgeContextMenu.Size = new System.Drawing.Size(259, 128);
             // 
             // RenameMenuItem
@@ -67,6 +69,7 @@
             this.ReverseMenuItem.Name = "ReverseMenuItem";
             this.ReverseMenuItem.Size = new System.Drawing.Size(258, 24);
             this.ReverseMenuItem.Text = "Изменить направление";
+            this.ReverseMenuItem.Click += new System.EventHandler(this.ReverseMenuItem_Click);
             // 
             // DeleteMenuItem
             // 
@@ -74,6 +77,13 @@
             this.DeleteMenuItem.Size = new System.Drawing.Size(258, 24);
             this.DeleteMenuItem.Text = "Удалить";
             this.DeleteMenuItem.Click += new System.EventHandler(this.DeleteMenuItem_Click);
+            // 
+            // ChangeWeightMenuItem
+            // 
+            this.ChangeWeightMenuItem.Name = "ChangeWeightMenuItem";
+            this.ChangeWeightMenuItem.Size = new System.Drawing.Size(258, 24);
+            this.ChangeWeightMenuItem.Text = "Изменить вес";
+            this.ChangeWeightMenuItem.Click += new System.EventHandler(this.ChangeWeightMenuItem_Click);
             // 
             // EdgeControl
             // 
@@ -97,6 +107,7 @@
         private ContextMenuStrip EdgeContextMenu;
         private ToolStripMenuItem RenameMenuItem;
         private ToolStripMenuItem ChangeColorMenuItem;
+        private ToolStripMenuItem ChangeWeightMenuItem;
         private ToolStripMenuItem ReverseMenuItem;
         private ToolStripMenuItem DeleteMenuItem;
     }

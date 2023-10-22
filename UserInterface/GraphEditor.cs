@@ -76,5 +76,10 @@ namespace LW5
             ActiveGraphControl.DisplayStatistics = EnableStatisticsMenuItem.Checked;
             ActiveGraphControl?.Invalidate();
         }
+
+        private void OpenedFilesTabs_Selected(object sender, TabControlEventArgs e)
+        {
+            EnableStatisticsMenuItem.Checked = ActiveGraphControl.DisplayStatistics;
+        }
     }
 }

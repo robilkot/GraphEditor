@@ -25,7 +25,7 @@ namespace LW5.UserInterface
         public const string DefaultElementName = "Объект";
 
         public const string VertexToolTipText = "Степень: {0}\nЦвет: {1}";
-        public const string GraphStatisticsText = "Мощность графа: {0}\nКоличество дуг: {1}\nКоличество петель: {2}";
+        public const string GraphStatisticsText = "Мощность графа: {0}\nКоличество дуг: {1}\nКоличество петель: {2}\n\nВыделено вершин: {3}\nВыделено дуг: {4}";
 
         public const string RenameWindowTitleText = "Ввод идентификатора";
 

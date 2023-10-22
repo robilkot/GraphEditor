@@ -57,7 +57,7 @@ namespace LW5.UserInterface
             InitializeComponent();
         }
 
-        // todo: adapt this to work with real graphs and restoring vertices locations
+        // todo: When implement filesystem, adapt this to work with real graphs and restoring vertices locations
         private void InitializeControls()
         {
             Controls.Clear();
@@ -157,7 +157,7 @@ namespace LW5.UserInterface
                 destinationControl.Element?.IncidentEdges.Add((Edge)_edgeControlToBeCreated.Element);
                 destinationControl.IncidentEdgeControls.Add(_edgeControlToBeCreated);
 
-                // This works only when creating edge from vertex, not from another edge
+                // todo: This works only when creating edge from vertex, not from another edge
                 _edgeControlToBeCreated.First?.Element?.IncidentEdges.Add((Edge)_edgeControlToBeCreated.Element);
                 _graph.Add(_edgeControlToBeCreated.Element);
 
@@ -227,7 +227,6 @@ namespace LW5.UserInterface
 
         private void GraphControl_Paint(object sender, PaintEventArgs e)
         {
-            // todo: move to init. mb create setting for graphics quality
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
             if (_creatingEdge)
@@ -240,7 +239,7 @@ namespace LW5.UserInterface
                 );
             }
 
-            // Two cycles to render vertices after edges. Screw that
+            // todo: Two cycles to render vertices after edges. Screw that
             foreach (UserControl control in Controls)
             {
                 if (control is EdgeControl)
@@ -271,7 +270,13 @@ namespace LW5.UserInterface
 
             if(DisplayStatistics)
             {
-                string stats = string.Format(GraphStatisticsText, _graph.Vertices.Count, _graph.Edges.Count, _graph.Loops.Count);
+                string stats = string.Format(GraphStatisticsText,
+                    _graph.Vertices.Count,
+                    _graph.Edges.Count,
+                    _graph.Loops.Count,
+                    Selected.Where(s => s is VertexControl).Count(),
+                    Selected.Where(s => s is EdgeControl).Count()
+                    );
                 TextRenderer.DrawText(e, stats, StatisticsFont, new Point(20, 20), StatisticsFontColor);
             }
         }

@@ -54,6 +54,7 @@
             this.OpenedFilesTabs.Size = new System.Drawing.Size(1262, 645);
             this.OpenedFilesTabs.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.OpenedFilesTabs.TabIndex = 1;
+            this.OpenedFilesTabs.Selected += new System.Windows.Forms.TabControlEventHandler(this.OpenedFilesTabs_Selected);
             // 
             // MenuStrip
             // 
