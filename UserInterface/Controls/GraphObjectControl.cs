@@ -19,12 +19,13 @@ namespace LW5.UserInterface
             {
                 incident.Delete();
             }
+            GraphControl?.Invalidate();
             GraphControl?.Remove(this);
             Dispose();
         }
         public virtual void Rename()
         {
-            string newString = Interaction.InputBox(string.Empty, RenameWindowTitleText, Element.Identifier);
+            string newString = Interaction.InputBox(string.Empty, RenameWindowTitleText, Element?.Identifier ?? DefaultElementName);
             if (newString.Length > 0) Element.Identifier = newString;
         }
         public virtual void ChangeColor()

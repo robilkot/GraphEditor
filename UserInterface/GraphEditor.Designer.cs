@@ -36,7 +36,8 @@
             this.CloseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SaveMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.SaveAsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.редактированиеToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.ToolsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.EnableStatisticsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.InfoMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -59,7 +60,7 @@
             this.MenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
             this.MenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.файлToolStripMenuItem,
-            this.редактированиеToolStripMenuItem,
+            this.ToolsMenuItem,
             this.InfoMenuItem});
             this.MenuStrip.Location = new System.Drawing.Point(0, 0);
             this.MenuStrip.Name = "MenuStrip";
@@ -83,41 +84,50 @@
             // 
             this.CreateMenuItem.Name = "CreateMenuItem";
             this.CreateMenuItem.ShortcutKeyDisplayString = "Ctrl+N";
-            this.CreateMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.CreateMenuItem.Size = new System.Drawing.Size(205, 26);
             this.CreateMenuItem.Text = "Создать";
             this.CreateMenuItem.Click += new System.EventHandler(this.CreateMenuItem_Click);
             // 
             // OpenMenuItem
             // 
             this.OpenMenuItem.Name = "OpenMenuItem";
-            this.OpenMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.OpenMenuItem.Size = new System.Drawing.Size(205, 26);
             this.OpenMenuItem.Text = "Открыть";
             // 
             // CloseMenuItem
             // 
             this.CloseMenuItem.Name = "CloseMenuItem";
             this.CloseMenuItem.ShortcutKeyDisplayString = "Ctrl+W";
-            this.CloseMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.CloseMenuItem.Size = new System.Drawing.Size(205, 26);
             this.CloseMenuItem.Text = "Закрыть";
             this.CloseMenuItem.Click += new System.EventHandler(this.CloseMenuItem_Click);
             // 
             // SaveMenuItem
             // 
             this.SaveMenuItem.Name = "SaveMenuItem";
-            this.SaveMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.SaveMenuItem.Size = new System.Drawing.Size(205, 26);
             this.SaveMenuItem.Text = "Сохранить";
             // 
             // SaveAsMenuItem
             // 
             this.SaveAsMenuItem.Name = "SaveAsMenuItem";
-            this.SaveAsMenuItem.Size = new System.Drawing.Size(224, 26);
+            this.SaveAsMenuItem.Size = new System.Drawing.Size(205, 26);
             this.SaveAsMenuItem.Text = "Сохранить как";
             // 
-            // редактированиеToolStripMenuItem
+            // ToolsMenuItem
             // 
-            this.редактированиеToolStripMenuItem.Name = "редактированиеToolStripMenuItem";
-            this.редактированиеToolStripMenuItem.Size = new System.Drawing.Size(74, 24);
-            this.редактированиеToolStripMenuItem.Text = "Правка";
+            this.ToolsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.EnableStatisticsMenuItem});
+            this.ToolsMenuItem.Name = "ToolsMenuItem";
+            this.ToolsMenuItem.Size = new System.Drawing.Size(117, 24);
+            this.ToolsMenuItem.Text = "Инструменты";
+            // 
+            // EnableStatisticsMenuItem
+            // 
+            this.EnableStatisticsMenuItem.Name = "EnableStatisticsMenuItem";
+            this.EnableStatisticsMenuItem.Size = new System.Drawing.Size(267, 26);
+            this.EnableStatisticsMenuItem.Text = "Отображение статистики";
+            this.EnableStatisticsMenuItem.Click += new System.EventHandler(this.EnableStatisticsMenuItem_Click);
             // 
             // InfoMenuItem
             // 
@@ -157,7 +167,8 @@
         private ToolStripMenuItem CloseMenuItem;
         private ToolStripMenuItem SaveMenuItem;
         private ToolStripMenuItem SaveAsMenuItem;
-        private ToolStripMenuItem редактированиеToolStripMenuItem;
+        private ToolStripMenuItem ToolsMenuItem;
         private ToolStripMenuItem InfoMenuItem;
+        private ToolStripMenuItem EnableStatisticsMenuItem;
     }
 }

@@ -69,5 +69,12 @@ namespace LW5
         {
             MessageBox.Show(ProgramDescriptionText, ProgramDescriptionWindowText);
         }
+
+        private void EnableStatisticsMenuItem_Click(object sender, EventArgs e)
+        {
+            EnableStatisticsMenuItem.Checked = !EnableStatisticsMenuItem.Checked;
+            ActiveGraphControl.DisplayStatistics = EnableStatisticsMenuItem.Checked;
+            ActiveGraphControl?.Invalidate();
+        }
     }
 }

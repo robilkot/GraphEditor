@@ -1,5 +1,6 @@
 ﻿using LW5.Logic;
 using System.Drawing.Drawing2D;
+using System.Windows.Forms.VisualStyles;
 using static LW5.UserInterface.Styles;
 
 namespace LW5.UserInterface
@@ -37,6 +38,7 @@ namespace LW5.UserInterface
         private EdgeControl _edgeControlToBeCreated = new();
         private bool _creatingEdge = false;
         public bool CreatingEdge { get => _creatingEdge; }
+        public bool DisplayStatistics { get; set; } = false;
 
         private Graph _graph = new();
         public Graph Graph
@@ -135,9 +137,6 @@ namespace LW5.UserInterface
                 First = sourceControl.Element
             };
 
-            ((Vertex)sourceControl.Element).IncidentEdges.Add(edge);
-            _graph.Add(edge);
-
             _edgeControlToBeCreated = new()
             {
                 First = sourceControl,
@@ -157,6 +156,10 @@ namespace LW5.UserInterface
 
                 destinationControl.Element?.IncidentEdges.Add((Edge)_edgeControlToBeCreated.Element);
                 destinationControl.IncidentEdgeControls.Add(_edgeControlToBeCreated);
+
+                // This works only when creating edge from vertex, not from another edge
+                _edgeControlToBeCreated.First?.Element?.IncidentEdges.Add((Edge)_edgeControlToBeCreated.Element);
+                _graph.Add(_edgeControlToBeCreated.Element);
 
                 Controls.Add(_edgeControlToBeCreated);
                 _creatingEdge = false;
@@ -264,6 +267,12 @@ namespace LW5.UserInterface
                     new Pen(SelectionRectangleColor),
                     _selectionRectangle
                     );
+            }
+
+            if(DisplayStatistics)
+            {
+                string stats = string.Format(GraphStatisticsText, _graph.Vertices.Count, _graph.Edges.Count, _graph.Loops.Count);
+                TextRenderer.DrawText(e, stats, StatisticsFont, new Point(20, 20), StatisticsFontColor);
             }
         }
 

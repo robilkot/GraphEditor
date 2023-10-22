@@ -1,6 +1,5 @@
-﻿using System.Reflection;
-
-using static LW5.UserInterface.Styles;
+﻿using static LW5.UserInterface.Styles;
+using LW5.Logic;
 
 namespace LW5.UserInterface
 {
@@ -13,14 +12,10 @@ namespace LW5.UserInterface
             InitializeComponent();
             Width = VertexDiameter;
             Height = VertexDiameter;
-
-            typeof(Panel).InvokeMember("DoubleBuffered", BindingFlags.SetProperty
-            | BindingFlags.Instance | BindingFlags.NonPublic, null,
-            this, new object[] { true });
         }
         private void UpdateToolTip()
         {
-            string newText = string.Format(VertexToolTipText, Element.Color.ToRGBString());
+            string newText = string.Format(VertexToolTipText, ((Vertex)Element).Degree, Element.Color.ToRGBString());
             VertexToolTip.ToolTipTitle = Element.Identifier;
 
             VertexToolTip.SetToolTip(this, newText);
@@ -38,6 +33,7 @@ namespace LW5.UserInterface
                 Width - SelectionThickness - 1,
                 Height - SelectionThickness - 1);
 
+
             using (SolidBrush brush = new(Element.Color))
             {
                 e.Graphics.FillEllipse(
@@ -46,21 +42,25 @@ namespace LW5.UserInterface
                             );
             }
 
-            if (_mouseHovering)
-            {
-                e.Graphics.DrawEllipse(
-                        new Pen(HoverColor, SelectionThickness),
-                        drawingBounds
-                        );
-            }
+            Color detailsColor = _mouseHovering ? HoverColor : Selected ? SelectedColor : Element.Color;
 
-            if (Selected)
-            {
-                e.Graphics.DrawEllipse(
-                    new Pen(SelectedColor, SelectionThickness),
+            e.Graphics.DrawEllipse(
+                    new Pen(detailsColor, SelectionThickness),
                     drawingBounds
                     );
-            }
+
+            TextRenderer.DrawText(e, Element.Identifier, VertexNameFont, new Point(Location.X + Width - 5, Location.Y - VertexNameFont.Height), Element.Color);
+        }
+
+        public override void Rename()
+        {
+            base.Rename();
+            GraphControl?.Invalidate();
+        }
+        public override void ChangeColor()
+        {
+            base.ChangeColor();
+            GraphControl?.Invalidate();
         }
         private void VertexControl_MouseDown(object sender, MouseEventArgs e)
         {
@@ -109,7 +109,6 @@ namespace LW5.UserInterface
                 GraphControl?.Invalidate();
             }
         }
-
         private void ChangeColorMenuItem_Click(object sender, EventArgs e)
         {
             ChangeColor();
@@ -119,7 +118,6 @@ namespace LW5.UserInterface
         {
             Delete();
         }
-
         private void RenameMenuItem_Click(object sender, EventArgs e)
         {
             Rename();

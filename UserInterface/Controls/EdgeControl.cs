@@ -13,14 +13,24 @@ namespace LW5.UserInterface
 
         private void EdgeControl_Paint(object sender, PaintEventArgs e)
         {
-            int newWidth = Math.Abs(First.Left - Second.Left);
-            Width = newWidth > 0 ? newWidth : 1;
+            if (First == Second)
+            {
+                Left = First.Center().X - 10;
+                Top = First.Center().Y - 10;
+                Width = 50;
+                Height = 50;
+            }
+            else
+            {
+                int newWidth = Math.Abs(First.Left - Second.Left);
+                Width = newWidth > 0 ? newWidth : 1;
 
-            int newHeight = Math.Abs(First.Top - Second.Top);
-            Height = newHeight > 0 ? newHeight : 1;
+                int newHeight = Math.Abs(First.Top - Second.Top);
+                Height = newHeight > 0 ? newHeight : 1;
 
-            Left = First.Left < Second.Left ? First.Center().X : Second.Center().X;
-            Top = First.Top < Second.Top ? First.Center().Y : Second.Center().Y;
+                Left = First.Left < Second.Left ? First.Center().X : Second.Center().X;
+                Top = First.Top < Second.Top ? First.Center().Y : Second.Center().Y;
+            }
         }
         private void EdgeControl_MouseDown(object sender, MouseEventArgs e)
         {
@@ -83,16 +93,17 @@ namespace LW5.UserInterface
             var linePoints = (First.Center(), Second.Center());
             using (Pen pen = new(Element.Color, EdgeThickness))
             {
-                if (Selected)
-                {
-                    pen.Color = SelectedColor;
-                }
-                else if (_mouseHovering)
-                {
-                    pen.Color = HoverColor;
-                }
+                pen.Color = _mouseHovering ? HoverColor : Selected ? SelectedColor : Element.Color;
 
-                e.Graphics.DrawLine(pen, linePoints.Item1, linePoints.Item2);
+
+                if (First == Second)
+                {
+                    e.Graphics.DrawEllipse(pen, Location.X, Location.Y, Width, Height);
+                }
+                else
+                {
+                    e.Graphics.DrawLine(pen, linePoints.Item1, linePoints.Item2);
+                }
             }
         }
     }
