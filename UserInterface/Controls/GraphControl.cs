@@ -150,19 +150,19 @@ namespace LW5.UserInterface
 
         public void FinishCreatingEdge(GraphObjectControl destinationControl)
         {
-            ((Edge)_edgeControlToBeCreated.Element).Second = destinationControl.Element;
-            _edgeControlToBeCreated.Second = destinationControl;
-
-            if(destinationControl.Element is Vertex vertex)
+            if (_creatingEdge)
             {
-                vertex.IncidentEdges.Add((Edge)_edgeControlToBeCreated.Element);
-                ((VertexControl)destinationControl).IncidentEdgeControls.Add(_edgeControlToBeCreated);
+                ((Edge)_edgeControlToBeCreated.Element).Second = destinationControl.Element;
+                _edgeControlToBeCreated.Second = destinationControl;
+
+                destinationControl.Element?.IncidentEdges.Add((Edge)_edgeControlToBeCreated.Element);
+                destinationControl.IncidentEdgeControls.Add(_edgeControlToBeCreated);
+
+                Controls.Add(_edgeControlToBeCreated);
+                _creatingEdge = false;
+
+                Invalidate();
             }
-
-            Controls.Add(_edgeControlToBeCreated);
-            _creatingEdge = false;
-
-            Invalidate();
         }
 
         private void CreateVertexMenuItem_Click(object sender, EventArgs e)
@@ -227,26 +227,29 @@ namespace LW5.UserInterface
             // todo: move to init. mb create setting for graphics quality
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
 
+            if (_creatingEdge)
+            {
+                using var pen = new Pen(CreatingEdgeColor, EdgeThickness) { DashStyle = System.Drawing.Drawing2D.DashStyle.Dash };
+                e.Graphics.DrawLine(
+                pen,
+                _edgeControlToBeCreated.First.Center(),
+                _mouseCurrentLocation
+                );
+            }
+
             // Two cycles to render vertices after edges. Screw that
-            //foreach(UserControl control in Controls)
-            //{
-            //    if (control is EdgeControl)
-            //    {
-            //        ((IDrawable)control).Draw(e);
-            //    }
-            //}
-            //foreach (UserControl control in Controls)
-            //{
-            //    if(control is VertexControl)
-            //    {
-            //        ((IDrawable)control).Draw(e);
-            //    }
-            //}
             foreach (UserControl control in Controls)
             {
-                if (control is IDrawable drawable)
+                if (control is EdgeControl)
                 {
-                    drawable.Draw(e);
+                    ((IDrawable)control).Draw(e);
+                }
+            }
+            foreach (UserControl control in Controls)
+            {
+                if (control is VertexControl)
+                {
+                    ((IDrawable)control).Draw(e);
                 }
             }
 
@@ -260,14 +263,6 @@ namespace LW5.UserInterface
                 e.Graphics.DrawRectangle(
                     new Pen(SelectionRectangleColor),
                     _selectionRectangle
-                    );
-            }
-            if (_creatingEdge)
-            {
-                e.Graphics.DrawLine(
-                    Pens.Black,
-                    _edgeControlToBeCreated.First.Center(),
-                    _mouseCurrentLocation
                     );
             }
         }
