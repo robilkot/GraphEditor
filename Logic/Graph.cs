@@ -4,10 +4,12 @@
     public class Graph
     {
         public List<GraphObject> Elements { get; set; } = new();
-        public List<GraphObject> Vertices { get => Elements.Where(e => e is Vertex).ToList(); }
-        public List<GraphObject> Edges { get => Elements.Where(e => e is Edge).ToList(); }
-        public List<GraphObject> Loops { get => Elements.Where(e => e is Edge edge && edge.First == edge.Second).ToList(); }
-        public int Size => Elements.Where(e => e is Vertex).Count();
+        public List<Vertex> Vertices { get => Elements.OfType<Vertex>().ToList(); }
+        public List<Edge> Edges { get => Elements.OfType<Edge>().ToList(); }
+        public List<Edge> Loops { get => (from e in Edges
+                                         where e.First == e.Second
+                                         select e).ToList(); }
+        public int Size => Vertices.Count;
 
         public void Add(GraphObject graphObject)
         {

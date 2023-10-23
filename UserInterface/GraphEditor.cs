@@ -89,5 +89,29 @@ namespace LW5
                 EnableStatisticsMenuItem.Checked = ActiveGraphControl.DisplayStatistics;
             }
         }
+
+        private void ConnectivityCheckMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ActiveGraph != null)
+            {
+                MessageBox.Show(Algorithm.IsStronglyConnected(ActiveGraph).ToString());
+            }
+        }
+
+        private void WeakConnectivityCheckMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ActiveGraph != null)
+            {
+                MessageBox.Show(Algorithm.IsWeaklyConnected(ActiveGraph).ToString());
+            }
+        }
+
+        private void EulerCheckMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ActiveGraph != null)
+            {
+                MessageBox.Show(Algorithm.IsEuler(ActiveGraph).ToString());
+            }
+        }
     }
 }

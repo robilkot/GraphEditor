@@ -7,8 +7,8 @@ namespace LW5.UserInterface
 {
     public abstract class GraphObjectControl : UserControl, ISelectable, IDeletable, IDrawable
     {
-        public GraphControl? GraphControl { get => Parent as GraphControl; }
-        public GraphObject? Element { get; set; }
+        public GraphControl GraphControl { get => Parent as GraphControl; }
+        public GraphObject Element { get; set; }
         public List<EdgeControl> IncidentEdgeControls { get; set; } = new();
 
         public bool Selected { get; set; }

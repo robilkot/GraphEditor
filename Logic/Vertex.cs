@@ -7,6 +7,31 @@
         public VertexType VertexType = VertexType.Default;
         public int Degree => IncidentEdges.Count;
 
+        public List<Vertex> AdjacentVertices
+        {
+            get
+            {
+                List<Vertex> adjacent = new();
+
+                foreach (var e in IncidentEdges)
+                {
+                    if (e.Second is Vertex v2 && v2 != this)
+                    {
+                        adjacent.Add(v2);
+                    }
+                    if (e.EdgeType == EdgeType.Unoriented)
+                    {
+                        if (e.First is Vertex v1 && v1 != this)
+                        {
+                            adjacent.Add(v1);
+                        }
+                    }
+                }
+
+                return adjacent.ToList();
+            }
+        }
+
         public Vertex()
         {
             Identifier = DefaultName;

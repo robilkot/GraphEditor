@@ -17,6 +17,7 @@ namespace LW5.UserInterface
         public void Reverse()
         {
             (Second, First) = (First, Second);
+            (((Edge)Element).First, ((Edge)Element).Second) = (((Edge)Element).Second, ((Edge)Element).First);
             //Invalidate();
             GraphControl?.Invalidate();
         }
@@ -114,7 +115,7 @@ namespace LW5.UserInterface
             ((Edge)Element).EdgeType = IsOrientedMenuItem.Checked ? EdgeType.Oriented : EdgeType.Unoriented;
             GraphControl?.Invalidate();
         }
-        
+
         private void DeleteMenuItem_Click(object sender, EventArgs e)
         {
             Delete();

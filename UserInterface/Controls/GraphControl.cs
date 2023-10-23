@@ -11,20 +11,9 @@ namespace LW5.UserInterface
         {
             get
             {
-                List<ISelectable> selected = new();
-
-                foreach (var control in Controls)
-                {
-                    if (control is ISelectable selectable)
-                    {
-                        if (selectable.Selected == true)
-                        {
-                            selected.Add(selectable);
-                        }
-                    }
-                }
-
-                return selected;
+                return (from c in Controls.OfType<ISelectable>()
+                        where c.Selected == true
+                        select c).ToList();
             }
         }
 
@@ -62,35 +51,35 @@ namespace LW5.UserInterface
             Controls.Clear();
             Point newControlLocation = new(Width / 2, Height / 2);
 
-            foreach (var element in _graph.Elements)
-            {
-                GraphObjectControl control;
+            //foreach (var element in _graph.Elements)
+            //{
+            //    GraphObjectControl control;
 
-                if (element is Vertex)
-                {
-                    control = new VertexControl()
-                    {
-                        Element = element
-                    };
-                }// else if(element is Edge)
-                else
-                {
-                    control = new EdgeControl()
-                    {
-                        Element = element
-                    };
-                }
+            //    if (element is Vertex)
+            //    {
+            //        control = new VertexControl()
+            //        {
+            //            Element = element
+            //        };
+            //    }// else if(element is Edge)
+            //    else
+            //    {
+            //        control = new EdgeControl()
+            //        {
+            //            Element = element
+            //        };
+            //    }
 
-                control.Location = newControlLocation;
-                Controls.Add(control);
+            //    control.Location = newControlLocation;
+            //    Controls.Add(control);
 
-                newControlLocation.X += 50;
-                newControlLocation.Y += 50;
-            }
+            //    newControlLocation.X += 50;
+            //    newControlLocation.Y += 50;
+            //}
         }
         public void SelectAll()
         {
-            foreach (UserControl control in Controls)
+            foreach (var control in Controls.OfType<UserControl>())
             {
                 if (control is ISelectable selectable)
                 {
@@ -180,15 +169,9 @@ namespace LW5.UserInterface
 
         private void DeleteSelectedMenuItem_Click(object sender, EventArgs e)
         {
-            List<IDeletable> toDelete = new();
-
-            foreach (var graphObject in Selected)
-            {
-                if (graphObject is IDeletable graphElement)
-                {
-                    toDelete.Add(graphElement);
-                }
-            }
+            var toDelete = from o in Selected
+                           where o is IDeletable
+                           select o as IDeletable;
 
             foreach (var element in toDelete)
             {
@@ -232,20 +215,14 @@ namespace LW5.UserInterface
             }
 
             // todo: Two cycles to render vertices after edges. Screw that
-            foreach (UserControl control in Controls)
+            foreach (var control in Controls.OfType<EdgeControl>())
             {
-                if (control is EdgeControl)
-                {
-                    ((IDrawable)control).Draw(e);
-                    //e.Graphics.DrawRectangle(Pens.Black, control.Bounds); // DEBUG
-                }
+                ((IDrawable)control).Draw(e);
+                //e.Graphics.DrawRectangle(Pens.Black, control.Bounds); // DEBUG
             }
-            foreach (UserControl control in Controls)
+            foreach (var control in Controls.OfType<VertexControl>())
             {
-                if (control is VertexControl)
-                {
-                    ((IDrawable)control).Draw(e);
-                }
+                ((IDrawable)control).Draw(e);
             }
 
             if (_selecting)
@@ -267,8 +244,8 @@ namespace LW5.UserInterface
                     _graph.Vertices.Count,
                     _graph.Edges.Count,
                     _graph.Loops.Count,
-                    Selected.Where(s => s is VertexControl).Count(),
-                    Selected.Where(s => s is EdgeControl).Count()
+                    Selected.OfType<VertexControl>().Count(),
+                    Selected.OfType<EdgeControl>().Count()
                     );
                 TextRenderer.DrawText(e, stats, StatisticsFont, new Point(20, 20), StatisticsFontColor);
             }
@@ -302,15 +279,12 @@ namespace LW5.UserInterface
                 }
                 else
                 {
-                    foreach (UserControl control in Controls)
+                    foreach (var control in Controls.OfType<ISelectable>())
                     {
-                        if (control is ISelectable selectable)
+                        if (_selectionRectangle.IntersectsWith(((UserControl)control).Bounds))
                         {
-                            if (_selectionRectangle.IntersectsWith(control.Bounds))
-                            {
-                                selectable.Selected = true;
-                            };
-                        }
+                            control.Selected = true;
+                        };
                     }
 
                 }
