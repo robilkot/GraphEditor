@@ -4,7 +4,7 @@
     {
         public static bool IsEuler(Graph graph)
         {
-            if( (from v in graph.Vertices
+            if ((from v in graph.Vertices
                  where v.Degree % 2 != 0
                  select v).Count() > 2)
             {
@@ -19,12 +19,51 @@
                 }
             }
 
-            if(!IsWeaklyConnected(graph))
+            if (!IsWeaklyConnected(graph))
             {
                 return false;
             }
 
             return true;
+        }
+
+        public static List<Vertex> EulerCycle(Graph graph)
+        {
+            if (graph.Size == 0)
+            {
+                return new();
+            }
+            if(!IsEuler(graph))
+            {
+                return new();
+            }
+
+            List<Edge> visited = new();
+            List<Vertex> path = new();
+            Stack<Vertex> stack = new();
+
+            stack.Push(graph.Vertices[0]);
+
+            while (stack.Count > 0)
+            {
+                var V = stack.Peek();
+
+                var E = V.IncidentEdges.Find(e => visited.Contains(e) == false);
+
+                if(E != null)
+                {
+                    stack.Push((Vertex)E.Second);
+                    visited.Add(E);
+                } else
+                {
+                    _ = stack.Pop();
+                    path.Add(V);
+                }
+            }
+
+            path.RemoveAt(path.Count - 1);
+            path.Reverse();
+            return path.ToList();
         }
 
         public static bool IsStronglyConnected(Graph graph)

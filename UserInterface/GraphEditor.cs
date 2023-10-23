@@ -113,5 +113,22 @@ namespace LW5
                 MessageBox.Show(Algorithm.IsEuler(ActiveGraph).ToString());
             }
         }
+
+        private void FindEulerCycleMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ActiveGraph != null)
+            {
+                var path = Algorithm.EulerCycle(ActiveGraph);
+                if(path.Count == 0)
+                {
+                    MessageBox.Show("Граф не содержит эйлеров цикл");
+                    return;
+                }
+
+                var viewer = new ResultViewer();
+                viewer.SetContent(path);
+                viewer.Show();
+            }
+        }
     }
 }

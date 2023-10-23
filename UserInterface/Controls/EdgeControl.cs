@@ -27,6 +27,7 @@ namespace LW5.UserInterface
             if (int.TryParse(newString, out int newWeight))
             {
                 ((Edge)Element).Weight = newWeight;
+                GraphControl?.Invalidate();
             }
         }
 
@@ -140,7 +141,7 @@ namespace LW5.UserInterface
             // If edge is loop
             if (First == Second)
             {
-                // todo: Arrows for loops. Or do we need it?
+                // todo: Arrows for loops. Or do we need it? +Text for loops
                 e.Graphics.DrawEllipse(pen, Location.X, Location.Y, Width, Height);
             }
             else
@@ -162,6 +163,7 @@ namespace LW5.UserInterface
                     e.Graphics.DrawLine(pen, c, new Point(c.X + (int)arrowL.X, c.Y + (int)arrowL.Y));
                     e.Graphics.DrawLine(pen, c, new Point(c.X + (int)arrowR.X, c.Y + (int)arrowR.Y));
                 }
+                TextRenderer.DrawText(e, ((Edge)Element).Weight.ToString(), EdgeWeightFont, new Point(this.Center().X - 5, this.Center().Y - VertexNameFont.Height), Element.Color);
             }
         }
     }

@@ -40,8 +40,9 @@
             this.EnableStatisticsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.StrongConnectivityCheckMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.WeakConnectivityCheckMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.InfoMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EulerCheckMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.InfoMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.FindEulerCycleMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.MenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -124,7 +125,8 @@
             this.EnableStatisticsMenuItem,
             this.StrongConnectivityCheckMenuItem,
             this.WeakConnectivityCheckMenuItem,
-            this.EulerCheckMenuItem});
+            this.EulerCheckMenuItem,
+            this.FindEulerCycleMenuItem});
             this.ToolsMenuItem.Name = "ToolsMenuItem";
             this.ToolsMenuItem.Size = new System.Drawing.Size(117, 24);
             this.ToolsMenuItem.Text = "Инструменты";
@@ -150,6 +152,13 @@
             this.WeakConnectivityCheckMenuItem.Text = "Проверить на слабую связность";
             this.WeakConnectivityCheckMenuItem.Click += new System.EventHandler(this.WeakConnectivityCheckMenuItem_Click);
             // 
+            // EulerCheckMenuItem
+            // 
+            this.EulerCheckMenuItem.Name = "EulerCheckMenuItem";
+            this.EulerCheckMenuItem.Size = new System.Drawing.Size(327, 26);
+            this.EulerCheckMenuItem.Text = "Проверить на эйлеровость";
+            this.EulerCheckMenuItem.Click += new System.EventHandler(this.EulerCheckMenuItem_Click);
+            // 
             // InfoMenuItem
             // 
             this.InfoMenuItem.Name = "InfoMenuItem";
@@ -157,12 +166,12 @@
             this.InfoMenuItem.Text = "О программе";
             this.InfoMenuItem.Click += new System.EventHandler(this.InfoMenuItem_Click);
             // 
-            // EulerCheckMenuItem
+            // FindEulerCycleMenuItem
             // 
-            this.EulerCheckMenuItem.Name = "EulerCheckMenuItem";
-            this.EulerCheckMenuItem.Size = new System.Drawing.Size(327, 26);
-            this.EulerCheckMenuItem.Text = "Проверить на эйлеровость";
-            this.EulerCheckMenuItem.Click += new System.EventHandler(this.EulerCheckMenuItem_Click);
+            this.FindEulerCycleMenuItem.Name = "FindEulerCycleMenuItem";
+            this.FindEulerCycleMenuItem.Size = new System.Drawing.Size(327, 26);
+            this.FindEulerCycleMenuItem.Text = "Найти эйлеров цикл";
+            this.FindEulerCycleMenuItem.Click += new System.EventHandler(this.FindEulerCycleMenuItem_Click);
             // 
             // GraphEditor
             // 
@@ -201,5 +210,6 @@
         private ToolStripMenuItem StrongConnectivityCheckMenuItem;
         private ToolStripMenuItem WeakConnectivityCheckMenuItem;
         private ToolStripMenuItem EulerCheckMenuItem;
+        private ToolStripMenuItem FindEulerCycleMenuItem;
     }
 }

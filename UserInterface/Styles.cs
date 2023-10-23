@@ -5,6 +5,7 @@ namespace LW5.UserInterface
     public static class Styles
     {
         public static readonly Font VertexNameFont = new("Segoe UI", 12);
+        public static readonly Font EdgeWeightFont = new("Segoe UI", 9);
         public static readonly Font StatisticsFont = new("Segoe UI", 9);
 
         public static readonly Color SelectedColor = Color.DodgerBlue;
