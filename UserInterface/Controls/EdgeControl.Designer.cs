@@ -34,6 +34,7 @@
             this.ChangeColorMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ChangeWeightMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.ReverseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.IsOrientedMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.DeleteMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.EdgeContextMenu.SuspendLayout();
             this.SuspendLayout();
@@ -46,6 +47,7 @@
             this.ChangeColorMenuItem,
             this.ReverseMenuItem,
             this.ChangeWeightMenuItem,
+            this.IsOrientedMenuItem,
             this.DeleteMenuItem});
             this.EdgeContextMenu.Name = "EdgeContextMenu";
             this.EdgeContextMenu.Size = new System.Drawing.Size(259, 128);
@@ -78,6 +80,14 @@
             this.DeleteMenuItem.Text = "Удалить";
             this.DeleteMenuItem.Click += new System.EventHandler(this.DeleteMenuItem_Click);
             // 
+            // IsOrientedMenuItem
+            // 
+            this.IsOrientedMenuItem.Name = "IsOrientedMenuItem";
+            this.IsOrientedMenuItem.Size = new System.Drawing.Size(258, 24);
+            this.IsOrientedMenuItem.Text = "Ориентирована";
+            this.IsOrientedMenuItem.Checked = true;
+            this.IsOrientedMenuItem.Click += new System.EventHandler(this.IsOrientedMenuItem_Click);
+            // 
             // ChangeWeightMenuItem
             // 
             this.ChangeWeightMenuItem.Name = "ChangeWeightMenuItem";
@@ -91,12 +101,11 @@
             this.ContextMenuStrip = this.EdgeContextMenu;
             this.Name = "EdgeControl";
             this.DoubleBuffered = true;
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.EdgeControl_Paint);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.EdgeControl_MouseDown);
             this.MouseEnter += new System.EventHandler(this.EdgeControl_MouseEnter);
             this.MouseLeave += new System.EventHandler(this.EdgeControl_MouseLeave);
+            this.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.EdgeControl_MouseDoubleClick);
 
-            
             this.EdgeContextMenu.ResumeLayout(false);
             this.ResumeLayout(false);
 
@@ -110,5 +119,6 @@
         private ToolStripMenuItem ChangeWeightMenuItem;
         private ToolStripMenuItem ReverseMenuItem;
         private ToolStripMenuItem DeleteMenuItem;
+        private ToolStripMenuItem IsOrientedMenuItem;
     }
 }

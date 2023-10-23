@@ -28,6 +28,10 @@ namespace LW5.UserInterface
             string newString = Interaction.InputBox(string.Empty, RenameWindowTitleText, Element?.Identifier ?? DefaultElementName);
             if (newString.Length > 0) Element.Identifier = newString;
         }
+        public virtual void CreateEdge()
+        {
+            GraphControl?.StartCreatingEdge(this);
+        }
         public virtual void ChangeColor()
         {
             if (GraphControl?.InputColorDialog.ShowDialog() == DialogResult.OK)

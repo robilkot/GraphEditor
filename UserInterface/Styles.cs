@@ -16,6 +16,7 @@ namespace LW5.UserInterface
         public static readonly SolidBrush SelectionRectangleBrush = new(Color.FromArgb(64, SelectionRectangleColor));
 
         public const int VertexDiameter = 36;
+        public const int LoopDiameter = 50;
         public const int SelectionThickness = 4;
         public const int EdgeThickness = 4;
 
@@ -28,6 +29,8 @@ namespace LW5.UserInterface
         public const string GraphStatisticsText = "Мощность графа: {0}\nКоличество дуг: {1}\nКоличество петель: {2}\n\nВыделено вершин: {3}\nВыделено дуг: {4}";
 
         public const string RenameWindowTitleText = "Ввод идентификатора";
+        public const string NumberInputWindowTitleText = "Ввод целочисленного значения";
+        public const string NumberEvaluatingErrorText = "Введено не целочисленное значение";
 
         public const string ProgramDescriptionWindowText = "Описание программы";
         public const string ProgramDescriptionText = "Графовый редактор, сделанный в рамках лабороторной работы 5 по дисциплине ОТИС.\n\nWith love by @robilkot.";

@@ -18,6 +18,8 @@ namespace LW5
         {
             get
             {
+                if (OpenedFilesTabs.SelectedTab == null) return null;
+
                 if (OpenedFilesTabs.SelectedTab.Controls["graphLayout"] is GraphControl graphControl)
                 {
                     return graphControl;
@@ -72,14 +74,20 @@ namespace LW5
 
         private void EnableStatisticsMenuItem_Click(object sender, EventArgs e)
         {
-            EnableStatisticsMenuItem.Checked = !EnableStatisticsMenuItem.Checked;
-            ActiveGraphControl.DisplayStatistics = EnableStatisticsMenuItem.Checked;
-            ActiveGraphControl?.Invalidate();
+            if (ActiveGraphControl != null)
+            {
+                EnableStatisticsMenuItem.Checked = !EnableStatisticsMenuItem.Checked;
+                ActiveGraphControl.DisplayStatistics = EnableStatisticsMenuItem.Checked;
+                ActiveGraphControl?.Invalidate();
+            }
         }
 
         private void OpenedFilesTabs_Selected(object sender, TabControlEventArgs e)
         {
-            EnableStatisticsMenuItem.Checked = ActiveGraphControl.DisplayStatistics;
+            if (ActiveGraphControl != null)
+            {
+                EnableStatisticsMenuItem.Checked = ActiveGraphControl.DisplayStatistics;
+            }
         }
     }
 }

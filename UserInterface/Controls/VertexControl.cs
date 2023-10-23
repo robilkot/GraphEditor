@@ -20,11 +20,7 @@ namespace LW5.UserInterface
 
             VertexToolTip.SetToolTip(this, newText);
         }
-        private void CreateEdge()
-        {
-            GraphControl?.StartCreatingEdge(this);
-            UpdateToolTip();
-        }
+        
         public override void Draw(PaintEventArgs e)
         {
             Rectangle drawingBounds = new(

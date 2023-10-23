@@ -1,11 +1,14 @@
-﻿using static LW5.UserInterface.Styles;
+﻿using LW5.Logic;
+using Microsoft.VisualBasic;
+using System.Numerics;
+using static LW5.UserInterface.Styles;
 
 namespace LW5.UserInterface
 {
     public partial class EdgeControl : GraphObjectControl
     {
-        public GraphObjectControl? First { get; set; }
-        public GraphObjectControl? Second { get; set; }
+        public GraphObjectControl First { get; set; }
+        public GraphObjectControl Second { get; set; }
         public EdgeControl()
         {
             InitializeComponent();
@@ -14,28 +17,39 @@ namespace LW5.UserInterface
         public void Reverse()
         {
             (Second, First) = (First, Second);
-            Invalidate();
+            //Invalidate();
+            GraphControl?.Invalidate();
         }
-        private void EdgeControl_Paint(object sender, PaintEventArgs e)
+        public void ChangeWeight()
+        {
+            string newString = Interaction.InputBox(string.Empty, NumberInputWindowTitleText, ((Edge)Element).Weight.ToString() ?? "0");
+            if (int.TryParse(newString, out int newWeight))
+            {
+                ((Edge)Element).Weight = newWeight;
+            }
+        }
+
+        private void RecalculateBounds()
         {
             if (First == Second)
             {
-                // todo: Move that loopy-shit to styles
+                // todo: Move those loopy-shit shifts to styles
                 Left = First.Center().X - 10;
                 Top = First.Center().Y - 10;
-                Width = 50;
-                Height = 50;
+                Width = LoopDiameter;
+                Height = LoopDiameter;
             }
             else
             {
-                int newWidth = Math.Abs(First.Left - Second.Left);
-                Width = newWidth > 0 ? newWidth : 1;
+                // todo: Optimise
+                int newWidth = Math.Abs(First.Center().X - Second.Center().X);
+                Width = newWidth > EdgeThickness ? newWidth : EdgeThickness;
 
-                int newHeight = Math.Abs(First.Top - Second.Top);
-                Height = newHeight > 0 ? newHeight : 1;
+                int newHeight = Math.Abs(First.Center().Y - Second.Center().Y);
+                Height = newHeight > EdgeThickness ? newHeight : EdgeThickness;
 
-                Left = First.Left < Second.Left ? First.Center().X : Second.Center().X;
-                Top = First.Top < Second.Top ? First.Center().Y : Second.Center().Y;
+                Left = First.Center().X < Second.Center().X ? First.Center().X : Second.Center().X;
+                Top = First.Center().Y < Second.Center().Y ? First.Center().Y : Second.Center().Y;
             }
         }
         private void EdgeControl_MouseDown(object sender, MouseEventArgs e)
@@ -91,7 +105,14 @@ namespace LW5.UserInterface
         }
         private void ChangeWeightMenuItem_Click(object sender, EventArgs e)
         {
-            // todo: Input number dialog
+            ChangeWeight();
+        }
+        private void IsOrientedMenuItem_Click(object sender, EventArgs e)
+        {
+            IsOrientedMenuItem.Checked = !IsOrientedMenuItem.Checked;
+            ReverseMenuItem.Enabled = IsOrientedMenuItem.Checked;
+            ((Edge)Element).EdgeType = IsOrientedMenuItem.Checked ? EdgeType.Oriented : EdgeType.Unoriented;
+            GraphControl?.Invalidate();
         }
         
         private void DeleteMenuItem_Click(object sender, EventArgs e)
@@ -102,25 +123,45 @@ namespace LW5.UserInterface
         {
             Reverse();
         }
+        private void EdgeControl_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            CreateEdge();
+        }
 
         public override void Draw(PaintEventArgs e)
         {
+            RecalculateBounds();
             var linePoints = (First.Center(), Second.Center());
-            using (Pen pen = new(Element.Color, EdgeThickness))
+
+            using Pen pen = new(Element.Color, EdgeThickness);
+            pen.Color = _mouseHovering ? HoverColor : Selected ? SelectedColor : Element.Color;
+
+            // If edge is loop
+            if (First == Second)
             {
-                pen.Color = _mouseHovering ? HoverColor : Selected ? SelectedColor : Element.Color;
+                // todo: Arrows for loops. Or do we need it?
+                e.Graphics.DrawEllipse(pen, Location.X, Location.Y, Width, Height);
+            }
+            else
+            {
+                e.Graphics.DrawLine(pen, linePoints.Item1, linePoints.Item2);
 
+                if (((Edge)Element).EdgeType == EdgeType.Oriented)
+                {
+                    Vector2 edgeDirection = new Vector2(linePoints.Item1.X - linePoints.Item2.X, linePoints.Item1.Y - linePoints.Item2.Y) / 4;
 
-                if (First == Second)
-                {
-                    e.Graphics.DrawEllipse(pen, Location.X, Location.Y, Width, Height);
-                }
-                else
-                {
-                    e.Graphics.DrawLine(pen, linePoints.Item1, linePoints.Item2);
+                    var arrowL = Vector2.Transform(edgeDirection, Matrix3x2.CreateRotation(1f / 2));
+                    var arrowR = Vector2.Transform(edgeDirection, Matrix3x2.CreateRotation(-1f / 2));
+                    arrowL = Vector2.Normalize(arrowL) * 20;
+                    arrowR = Vector2.Normalize(arrowR) * 20;
+
+                    var c = this.Center();
+                    c.X -= (int)edgeDirection.X;
+                    c.Y -= (int)edgeDirection.Y;
+                    e.Graphics.DrawLine(pen, c, new Point(c.X + (int)arrowL.X, c.Y + (int)arrowL.Y));
+                    e.Graphics.DrawLine(pen, c, new Point(c.X + (int)arrowR.X, c.Y + (int)arrowR.Y));
                 }
             }
-            // todo: Differentiate between oriented and non-oriented edges
         }
     }
 }

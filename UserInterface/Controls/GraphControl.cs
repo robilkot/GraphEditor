@@ -1,6 +1,5 @@
 ﻿using LW5.Logic;
 using System.Drawing.Drawing2D;
-using System.Windows.Forms.VisualStyles;
 using static LW5.UserInterface.Styles;
 
 namespace LW5.UserInterface
@@ -128,23 +127,16 @@ namespace LW5.UserInterface
             Controls.Remove(control);
             _graph.Remove(control.Element);
         }
-        public void StartCreatingEdge(VertexControl sourceControl)
+        public void StartCreatingEdge(GraphObjectControl sourceControl)
         {
             _creatingEdge = true;
-
-            Edge edge = new()
-            {
-                First = sourceControl.Element
-            };
 
             _edgeControlToBeCreated = new()
             {
                 First = sourceControl,
-                Element = edge,
+                Element = new Edge() { First = sourceControl.Element },
                 Location = sourceControl.Location
             };
-
-            sourceControl.IncidentEdgeControls.Add(_edgeControlToBeCreated);
         }
 
         public void FinishCreatingEdge(GraphObjectControl destinationControl)
@@ -154,13 +146,13 @@ namespace LW5.UserInterface
                 ((Edge)_edgeControlToBeCreated.Element).Second = destinationControl.Element;
                 _edgeControlToBeCreated.Second = destinationControl;
 
-                destinationControl.Element?.IncidentEdges.Add((Edge)_edgeControlToBeCreated.Element);
                 destinationControl.IncidentEdgeControls.Add(_edgeControlToBeCreated);
+                destinationControl.Element?.IncidentEdges.Add((Edge)_edgeControlToBeCreated.Element);
 
-                // todo: This works only when creating edge from vertex, not from another edge
+                _edgeControlToBeCreated.First?.IncidentEdgeControls.Add(_edgeControlToBeCreated);
                 _edgeControlToBeCreated.First?.Element?.IncidentEdges.Add((Edge)_edgeControlToBeCreated.Element);
-                _graph.Add(_edgeControlToBeCreated.Element);
 
+                _graph.Add(_edgeControlToBeCreated.Element);
                 Controls.Add(_edgeControlToBeCreated);
                 _creatingEdge = false;
 
@@ -245,6 +237,7 @@ namespace LW5.UserInterface
                 if (control is EdgeControl)
                 {
                     ((IDrawable)control).Draw(e);
+                    //e.Graphics.DrawRectangle(Pens.Black, control.Bounds); // DEBUG
                 }
             }
             foreach (UserControl control in Controls)
@@ -268,7 +261,7 @@ namespace LW5.UserInterface
                     );
             }
 
-            if(DisplayStatistics)
+            if (DisplayStatistics)
             {
                 string stats = string.Format(GraphStatisticsText,
                     _graph.Vertices.Count,
