@@ -7,8 +7,9 @@ namespace LW5.Logic
     {
         private const string DefaultName = "Vertex";
         public VertexType VertexType = VertexType.Default;
+        [JsonIgnore]
         public int Degree => IncidentEdges.Count;
-
+        [JsonIgnore]
         public List<Vertex> AdjacentVertices
         {
             get
@@ -33,7 +34,6 @@ namespace LW5.Logic
                 return adjacent.ToList();
             }
         }
-
 
         [JsonConstructor]
         public Vertex()

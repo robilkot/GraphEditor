@@ -5,10 +5,14 @@ namespace LW5.FileSystem
 {
     public static class FileSystem
     {
-        private static JsonSerializerOptions s_options = new()
+        private static readonly JsonSerializerOptions s_options = new()
         {
             ReferenceHandler = ReferenceHandler.Preserve,
-            WriteIndented = true
+            WriteIndented = true,
+            Converters = {
+                new ColorJsonConverter(),
+                new PointJsonConverter()
+            }
         };
         public static void SaveToFile(GraphRecord graphRecord, string filePath)
         {
@@ -31,5 +35,21 @@ namespace LW5.FileSystem
             if (toRead == null) throw new Exception("Error reading file");
             return toRead;
         }
+    }
+
+    public class ColorJsonConverter : JsonConverter<Color>
+    {
+        public override Color Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => ColorTranslator.FromHtml(reader.GetString());
+        public override void Write(Utf8JsonWriter writer, Color value, JsonSerializerOptions options) => writer.WriteStringValue("#" + value.R.ToString("X2") + value.G.ToString("X2") + value.B.ToString("X2").ToLower());
+    }
+
+    public class PointJsonConverter : JsonConverter<Point>
+    {
+        public override Point Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        {
+            string[] coordinates = reader.GetString().Split(';');
+            return new(int.Parse(coordinates[0]), int.Parse(coordinates[1]));
+        }
+        public override void Write(Utf8JsonWriter writer, Point value, JsonSerializerOptions options) => writer.WriteStringValue(value.X.ToString() + ';' + value.Y.ToString());
     }
 }

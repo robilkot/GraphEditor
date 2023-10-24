@@ -9,7 +9,6 @@ namespace LW5.FileSystem
     {
         public GraphObject GraphObject { get; set; }
         public Point Location { get; set; }
-        public Rectangle Bounds { get; set; }
 
         [JsonConstructor]
         public GraphObjectRecord() { }
@@ -17,7 +16,6 @@ namespace LW5.FileSystem
         {
             GraphObject = graphObjectControl.Element;
             Location = graphObjectControl.Location;
-            Bounds = graphObjectControl.Bounds;
         }
     }
 }

@@ -43,6 +43,7 @@ namespace LW5.UserInterface
 
             foreach(var obj in graphRecord.GraphObjects)
             {
+                // Bruh, sOlid has left chat
                 GraphObjectControl newControl;
                 if(obj.GraphObject is Vertex)
                 {
@@ -54,12 +55,11 @@ namespace LW5.UserInterface
 
                 newControl.Location = obj.Location;
                 newControl.Element = obj.GraphObject;
-                newControl.Bounds = obj.Bounds;
 
                 Controls.Add(newControl);
             }
 
-            // Before those lines only elements in graph are linked, not their controls
+            // Before these lines only elements in graph are linked, not their controls
             foreach(var edge in Controls.OfType<EdgeControl>())
             {
                 foreach(var c in Controls.OfType<GraphObjectControl>())
