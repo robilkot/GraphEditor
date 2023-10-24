@@ -3,7 +3,6 @@ using LW5.Logic;
 
 namespace LW5.UserInterface
 {
-    [Serializable]
     public partial class VertexControl : GraphObjectControl
     {
         private Point _mouseDownLocation;

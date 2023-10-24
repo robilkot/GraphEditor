@@ -28,171 +28,181 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.OpenedFilesTabs = new System.Windows.Forms.TabControl();
-            this.MenuStrip = new System.Windows.Forms.MenuStrip();
-            this.файлToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.CreateMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.OpenMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.CloseMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.SaveMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.SaveAsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.ToolsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.EnableStatisticsMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.StrongConnectivityCheckMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.WeakConnectivityCheckMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.EulerCheckMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.InfoMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.FindEulerCycleMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.MenuStrip.SuspendLayout();
-            this.SuspendLayout();
+            OpenedFilesTabs = new TabControl();
+            MenuStrip = new MenuStrip();
+            файлToolStripMenuItem = new ToolStripMenuItem();
+            CreateMenuItem = new ToolStripMenuItem();
+            OpenMenuItem = new ToolStripMenuItem();
+            CloseMenuItem = new ToolStripMenuItem();
+            SaveMenuItem = new ToolStripMenuItem();
+            SaveAsMenuItem = new ToolStripMenuItem();
+            ToolsMenuItem = new ToolStripMenuItem();
+            EnableStatisticsMenuItem = new ToolStripMenuItem();
+            StrongConnectivityCheckMenuItem = new ToolStripMenuItem();
+            WeakConnectivityCheckMenuItem = new ToolStripMenuItem();
+            EulerCheckMenuItem = new ToolStripMenuItem();
+            FindEulerCycleMenuItem = new ToolStripMenuItem();
+            FindShortestRouteMenuItem = new ToolStripMenuItem();
+            InfoMenuItem = new ToolStripMenuItem();
+            OpenFileDialog = new OpenFileDialog();
+            SaveFileDialog = new SaveFileDialog();
+            MenuStrip.SuspendLayout();
+            SuspendLayout();
             // 
             // OpenedFilesTabs
             // 
-            this.OpenedFilesTabs.AllowDrop = true;
-            this.OpenedFilesTabs.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.OpenedFilesTabs.ItemSize = new System.Drawing.Size(200, 30);
-            this.OpenedFilesTabs.Location = new System.Drawing.Point(0, 28);
-            this.OpenedFilesTabs.Margin = new System.Windows.Forms.Padding(2);
-            this.OpenedFilesTabs.Name = "OpenedFilesTabs";
-            this.OpenedFilesTabs.SelectedIndex = 0;
-            this.OpenedFilesTabs.Size = new System.Drawing.Size(1262, 645);
-            this.OpenedFilesTabs.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
-            this.OpenedFilesTabs.TabIndex = 1;
-            this.OpenedFilesTabs.Selected += new System.Windows.Forms.TabControlEventHandler(this.OpenedFilesTabs_Selected);
+            OpenedFilesTabs.AllowDrop = true;
+            OpenedFilesTabs.Dock = DockStyle.Fill;
+            OpenedFilesTabs.ItemSize = new Size(200, 30);
+            OpenedFilesTabs.Location = new Point(0, 33);
+            OpenedFilesTabs.Margin = new Padding(2);
+            OpenedFilesTabs.Name = "OpenedFilesTabs";
+            OpenedFilesTabs.SelectedIndex = 0;
+            OpenedFilesTabs.Size = new Size(1578, 808);
+            OpenedFilesTabs.SizeMode = TabSizeMode.Fixed;
+            OpenedFilesTabs.TabIndex = 1;
+            OpenedFilesTabs.Selected += OpenedFilesTabs_Selected;
             // 
             // MenuStrip
             // 
-            this.MenuStrip.ImageScalingSize = new System.Drawing.Size(20, 20);
-            this.MenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.файлToolStripMenuItem,
-            this.ToolsMenuItem,
-            this.InfoMenuItem});
-            this.MenuStrip.Location = new System.Drawing.Point(0, 0);
-            this.MenuStrip.Name = "MenuStrip";
-            this.MenuStrip.Size = new System.Drawing.Size(1262, 28);
-            this.MenuStrip.TabIndex = 2;
-            this.MenuStrip.Text = "menuStrip1";
+            MenuStrip.ImageScalingSize = new Size(20, 20);
+            MenuStrip.Items.AddRange(new ToolStripItem[] { файлToolStripMenuItem, ToolsMenuItem, InfoMenuItem });
+            MenuStrip.Location = new Point(0, 0);
+            MenuStrip.Name = "MenuStrip";
+            MenuStrip.Padding = new Padding(8, 2, 0, 2);
+            MenuStrip.Size = new Size(1578, 33);
+            MenuStrip.TabIndex = 2;
+            MenuStrip.Text = "menuStrip1";
             // 
             // файлToolStripMenuItem
             // 
-            this.файлToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.CreateMenuItem,
-            this.OpenMenuItem,
-            this.CloseMenuItem,
-            this.SaveMenuItem,
-            this.SaveAsMenuItem});
-            this.файлToolStripMenuItem.Name = "файлToolStripMenuItem";
-            this.файлToolStripMenuItem.Size = new System.Drawing.Size(59, 24);
-            this.файлToolStripMenuItem.Text = "Файл";
+            файлToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { CreateMenuItem, OpenMenuItem, CloseMenuItem, SaveMenuItem, SaveAsMenuItem });
+            файлToolStripMenuItem.Name = "файлToolStripMenuItem";
+            файлToolStripMenuItem.Size = new Size(69, 29);
+            файлToolStripMenuItem.Text = "Файл";
             // 
             // CreateMenuItem
             // 
-            this.CreateMenuItem.Name = "CreateMenuItem";
-            this.CreateMenuItem.ShortcutKeyDisplayString = "Ctrl+N";
-            this.CreateMenuItem.Size = new System.Drawing.Size(205, 26);
-            this.CreateMenuItem.Text = "Создать";
-            this.CreateMenuItem.Click += new System.EventHandler(this.CreateMenuItem_Click);
+            CreateMenuItem.Name = "CreateMenuItem";
+            CreateMenuItem.ShortcutKeyDisplayString = "Ctrl+N";
+            CreateMenuItem.Size = new Size(250, 34);
+            CreateMenuItem.Text = "Создать";
+            CreateMenuItem.Click += CreateMenuItem_Click;
             // 
             // OpenMenuItem
             // 
-            this.OpenMenuItem.Name = "OpenMenuItem";
-            this.OpenMenuItem.Size = new System.Drawing.Size(205, 26);
-            this.OpenMenuItem.Text = "Открыть";
+            OpenMenuItem.Name = "OpenMenuItem";
+            OpenMenuItem.Size = new Size(250, 34);
+            OpenMenuItem.Text = "Открыть";
+            OpenMenuItem.Click += OpenMenuItem_Click;
             // 
             // CloseMenuItem
             // 
-            this.CloseMenuItem.Name = "CloseMenuItem";
-            this.CloseMenuItem.ShortcutKeyDisplayString = "Ctrl+W";
-            this.CloseMenuItem.Size = new System.Drawing.Size(205, 26);
-            this.CloseMenuItem.Text = "Закрыть";
-            this.CloseMenuItem.Click += new System.EventHandler(this.CloseMenuItem_Click);
+            CloseMenuItem.Name = "CloseMenuItem";
+            CloseMenuItem.ShortcutKeyDisplayString = "Ctrl+W";
+            CloseMenuItem.Size = new Size(250, 34);
+            CloseMenuItem.Text = "Закрыть";
+            CloseMenuItem.Click += CloseMenuItem_Click;
             // 
             // SaveMenuItem
             // 
-            this.SaveMenuItem.Name = "SaveMenuItem";
-            this.SaveMenuItem.Size = new System.Drawing.Size(205, 26);
-            this.SaveMenuItem.Text = "Сохранить";
+            SaveMenuItem.Name = "SaveMenuItem";
+            SaveMenuItem.Size = new Size(250, 34);
+            SaveMenuItem.Text = "Сохранить";
+            SaveMenuItem.Visible = false;
             // 
             // SaveAsMenuItem
             // 
-            this.SaveAsMenuItem.Name = "SaveAsMenuItem";
-            this.SaveAsMenuItem.Size = new System.Drawing.Size(205, 26);
-            this.SaveAsMenuItem.Text = "Сохранить как";
+            SaveAsMenuItem.Name = "SaveAsMenuItem";
+            SaveAsMenuItem.Size = new Size(250, 34);
+            SaveAsMenuItem.Text = "Сохранить как";
+            SaveAsMenuItem.Click += SaveAsMenuItem_Click;
             // 
             // ToolsMenuItem
             // 
-            this.ToolsMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.EnableStatisticsMenuItem,
-            this.StrongConnectivityCheckMenuItem,
-            this.WeakConnectivityCheckMenuItem,
-            this.EulerCheckMenuItem,
-            this.FindEulerCycleMenuItem});
-            this.ToolsMenuItem.Name = "ToolsMenuItem";
-            this.ToolsMenuItem.Size = new System.Drawing.Size(117, 24);
-            this.ToolsMenuItem.Text = "Инструменты";
+            ToolsMenuItem.DropDownItems.AddRange(new ToolStripItem[] { EnableStatisticsMenuItem, StrongConnectivityCheckMenuItem, WeakConnectivityCheckMenuItem, EulerCheckMenuItem, FindEulerCycleMenuItem, FindShortestRouteMenuItem });
+            ToolsMenuItem.Name = "ToolsMenuItem";
+            ToolsMenuItem.Size = new Size(138, 29);
+            ToolsMenuItem.Text = "Инструменты";
             // 
             // EnableStatisticsMenuItem
             // 
-            this.EnableStatisticsMenuItem.Name = "EnableStatisticsMenuItem";
-            this.EnableStatisticsMenuItem.Size = new System.Drawing.Size(327, 26);
-            this.EnableStatisticsMenuItem.Text = "Отображение статистики";
-            this.EnableStatisticsMenuItem.Click += new System.EventHandler(this.EnableStatisticsMenuItem_Click);
+            EnableStatisticsMenuItem.Name = "EnableStatisticsMenuItem";
+            EnableStatisticsMenuItem.Size = new Size(389, 34);
+            EnableStatisticsMenuItem.Text = "Отображение статистики";
+            EnableStatisticsMenuItem.Click += EnableStatisticsMenuItem_Click;
             // 
             // StrongConnectivityCheckMenuItem
             // 
-            this.StrongConnectivityCheckMenuItem.Name = "StrongConnectivityCheckMenuItem";
-            this.StrongConnectivityCheckMenuItem.Size = new System.Drawing.Size(327, 26);
-            this.StrongConnectivityCheckMenuItem.Text = "Проверить на сильную связность";
-            this.StrongConnectivityCheckMenuItem.Click += new System.EventHandler(this.ConnectivityCheckMenuItem_Click);
+            StrongConnectivityCheckMenuItem.Name = "StrongConnectivityCheckMenuItem";
+            StrongConnectivityCheckMenuItem.Size = new Size(389, 34);
+            StrongConnectivityCheckMenuItem.Text = "Проверить на сильную связность";
+            StrongConnectivityCheckMenuItem.Click += ConnectivityCheckMenuItem_Click;
             // 
             // WeakConnectivityCheckMenuItem
             // 
-            this.WeakConnectivityCheckMenuItem.Name = "WeakConnectivityCheckMenuItem";
-            this.WeakConnectivityCheckMenuItem.Size = new System.Drawing.Size(327, 26);
-            this.WeakConnectivityCheckMenuItem.Text = "Проверить на слабую связность";
-            this.WeakConnectivityCheckMenuItem.Click += new System.EventHandler(this.WeakConnectivityCheckMenuItem_Click);
+            WeakConnectivityCheckMenuItem.Name = "WeakConnectivityCheckMenuItem";
+            WeakConnectivityCheckMenuItem.Size = new Size(389, 34);
+            WeakConnectivityCheckMenuItem.Text = "Проверить на слабую связность";
+            WeakConnectivityCheckMenuItem.Click += WeakConnectivityCheckMenuItem_Click;
             // 
             // EulerCheckMenuItem
             // 
-            this.EulerCheckMenuItem.Name = "EulerCheckMenuItem";
-            this.EulerCheckMenuItem.Size = new System.Drawing.Size(327, 26);
-            this.EulerCheckMenuItem.Text = "Проверить на эйлеровость";
-            this.EulerCheckMenuItem.Click += new System.EventHandler(this.EulerCheckMenuItem_Click);
-            // 
-            // InfoMenuItem
-            // 
-            this.InfoMenuItem.Name = "InfoMenuItem";
-            this.InfoMenuItem.Size = new System.Drawing.Size(118, 24);
-            this.InfoMenuItem.Text = "О программе";
-            this.InfoMenuItem.Click += new System.EventHandler(this.InfoMenuItem_Click);
+            EulerCheckMenuItem.Name = "EulerCheckMenuItem";
+            EulerCheckMenuItem.Size = new Size(389, 34);
+            EulerCheckMenuItem.Text = "Проверить на эйлеровость";
+            EulerCheckMenuItem.Click += EulerCheckMenuItem_Click;
             // 
             // FindEulerCycleMenuItem
             // 
-            this.FindEulerCycleMenuItem.Name = "FindEulerCycleMenuItem";
-            this.FindEulerCycleMenuItem.Size = new System.Drawing.Size(327, 26);
-            this.FindEulerCycleMenuItem.Text = "Найти эйлеров цикл";
-            this.FindEulerCycleMenuItem.Click += new System.EventHandler(this.FindEulerCycleMenuItem_Click);
+            FindEulerCycleMenuItem.Name = "FindEulerCycleMenuItem";
+            FindEulerCycleMenuItem.Size = new Size(389, 34);
+            FindEulerCycleMenuItem.Text = "Найти эйлеров цикл";
+            FindEulerCycleMenuItem.Click += FindEulerCycleMenuItem_Click;
+            // 
+            // FindShortestRouteMenuItem
+            // 
+            FindShortestRouteMenuItem.Name = "FindShortestRouteMenuItem";
+            FindShortestRouteMenuItem.Size = new Size(389, 34);
+            FindShortestRouteMenuItem.Text = "Найти кратчайший путь";
+            FindShortestRouteMenuItem.Click += FindRouteMenuItem_Click;
+            // 
+            // InfoMenuItem
+            // 
+            InfoMenuItem.Name = "InfoMenuItem";
+            InfoMenuItem.Size = new Size(141, 29);
+            InfoMenuItem.Text = "О программе";
+            InfoMenuItem.Click += InfoMenuItem_Click;
+            // 
+            // OpenFileDialog
+            // 
+            OpenFileDialog.FileName = "graph.json";
+            OpenFileDialog.Title = "Открыть файл";
+            // 
+            // SaveFileDialog
+            // 
+            SaveFileDialog.FileName = "graph.json";
+            SaveFileDialog.Title = "Сохранить файл";
             // 
             // GraphEditor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
-            this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1262, 673);
-            this.Controls.Add(this.OpenedFilesTabs);
-            this.Controls.Add(this.MenuStrip);
-            this.HelpButton = true;
-            this.MainMenuStrip = this.MenuStrip;
-            this.Margin = new System.Windows.Forms.Padding(2);
-            this.MinimumSize = new System.Drawing.Size(900, 450);
-            this.Name = "GraphEditor";
-            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "Графовый редактор";
-            this.Load += new System.EventHandler(this.GraphEditor_Load);
-            this.MenuStrip.ResumeLayout(false);
-            this.MenuStrip.PerformLayout();
-            this.ResumeLayout(false);
-            this.PerformLayout();
-
+            AutoScaleDimensions = new SizeF(10F, 25F);
+            AutoScaleMode = AutoScaleMode.Font;
+            ClientSize = new Size(1578, 841);
+            Controls.Add(OpenedFilesTabs);
+            Controls.Add(MenuStrip);
+            HelpButton = true;
+            MainMenuStrip = MenuStrip;
+            Margin = new Padding(2);
+            MinimumSize = new Size(1120, 548);
+            Name = "GraphEditor";
+            StartPosition = FormStartPosition.CenterScreen;
+            Text = "Графовый редактор";
+            Load += GraphEditor_Load;
+            MenuStrip.ResumeLayout(false);
+            MenuStrip.PerformLayout();
+            ResumeLayout(false);
+            PerformLayout();
         }
 
         #endregion
@@ -211,5 +221,8 @@
         private ToolStripMenuItem WeakConnectivityCheckMenuItem;
         private ToolStripMenuItem EulerCheckMenuItem;
         private ToolStripMenuItem FindEulerCycleMenuItem;
+        private ToolStripMenuItem FindShortestRouteMenuItem;
+        private OpenFileDialog OpenFileDialog;
+        private SaveFileDialog SaveFileDialog;
     }
 }

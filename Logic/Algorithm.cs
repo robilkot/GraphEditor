@@ -33,7 +33,7 @@
             {
                 return new();
             }
-            if(!IsEuler(graph))
+            if (!IsEuler(graph))
             {
                 return new();
             }
@@ -50,11 +50,12 @@
 
                 var E = V.IncidentEdges.Find(e => visited.Contains(e) == false);
 
-                if(E != null)
+                if (E != null)
                 {
                     stack.Push((Vertex)E.Second);
                     visited.Add(E);
-                } else
+                }
+                else
                 {
                     _ = stack.Pop();
                     path.Add(V);
@@ -65,6 +66,61 @@
             path.Reverse();
             return path.ToList();
         }
+
+        public static List<Vertex> Dijkstra(Graph graph, Vertex begin, Vertex end)
+        {
+            Dictionary<Vertex, int> shortestPaths = graph.Vertices.ToDictionary(v => v, v => int.MaxValue);
+            Dictionary<Vertex, Vertex> prevVerts = graph.Vertices.ToDictionary(v => v, v => v);
+            List<Vertex> visited = new(graph.Size);
+
+            void visitVertex(Vertex v)
+            {
+                if (visited.Contains(v))
+                {
+                    return;
+                }
+                visited.Add(v);
+
+                foreach (var adj in v.AdjacentVertices)
+                {
+                    var edge = v.IncidentEdges.Find(e => e.EdgeType == EdgeType.Unoriented || e.First == v && e.Second == adj);
+
+                    var newDistance = shortestPaths[v] + edge.Weight;
+                    if (newDistance < shortestPaths[adj])
+                    {
+                        shortestPaths[adj] = newDistance;
+                        prevVerts[adj] = v;
+                    }
+                }
+
+                foreach (var adj in v.AdjacentVertices)
+                {
+                    visitVertex(adj);
+                }
+            }
+
+            shortestPaths[begin] = 0;
+            visitVertex(begin);
+
+            // Restore route
+            List<Vertex> route = new()
+            {
+                end
+            };
+            while (prevVerts[route.Last()] != route.Last())
+            {
+                route.Add(prevVerts[route.Last()]);
+            }
+
+            return route;
+        }
+
+        //public static List<List<Vertex>> GetAllRoutes(Graph graph, Vertex begin, Vertex end)
+        //{
+        //    List<List<Vertex>> routes = new();
+
+        //    return routes;
+        //}
 
         public static bool IsStronglyConnected(Graph graph)
         {

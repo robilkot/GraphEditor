@@ -1,4 +1,6 @@
-﻿namespace LW5.Logic
+﻿using System.Text.Json.Serialization;
+
+namespace LW5.Logic
 {
     [Serializable]
     public class Vertex : GraphObject
@@ -32,6 +34,8 @@
             }
         }
 
+
+        [JsonConstructor]
         public Vertex()
         {
             Identifier = DefaultName;

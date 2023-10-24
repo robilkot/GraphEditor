@@ -119,7 +119,7 @@ namespace LW5
             if (ActiveGraph != null)
             {
                 var path = Algorithm.EulerCycle(ActiveGraph);
-                if(path.Count == 0)
+                if (path.Count == 0)
                 {
                     MessageBox.Show("Граф не содержит эйлеров цикл");
                     return;
@@ -128,6 +128,53 @@ namespace LW5
                 var viewer = new ResultViewer();
                 viewer.SetContent(path);
                 viewer.Show();
+            }
+        }
+
+        private void FindRouteMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ActiveGraph != null)
+            {
+                if (ActiveGraphControl.Selected.Count >= 2 &&
+                    ActiveGraphControl.Selected[0] is VertexControl vc1 &&
+                    ActiveGraphControl.Selected[1] is VertexControl vc2)
+                {
+                    var path = Algorithm.Dijkstra(ActiveGraph, (Vertex)vc1.Element, (Vertex)vc2.Element);
+                    if (path.Count < 1)
+                    {
+                        MessageBox.Show("Маршрут между вершинами не найден");
+                        return;
+                    }
+
+                    var viewer = new ResultViewer();
+                    viewer.SetContent(path);
+                    viewer.Show();
+
+                    return;
+                }
+                MessageBox.Show("Первые два выделенных элемента должны быть начальной и конечной точкой маршрута");
+                return;
+            }
+        }
+
+        private void SaveAsMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ActiveGraphControl != null)
+            {
+                if (SaveFileDialog.ShowDialog() == DialogResult.OK)
+                {
+                    FileSystem.FileSystem.SaveToFile(new(ActiveGraphControl), SaveFileDialog.FileName);
+                }
+            }
+        }
+
+        private void OpenMenuItem_Click(object sender, EventArgs e)
+        {
+            if (OpenFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                var graphRecord = FileSystem.FileSystem.ReadFromFile(OpenFileDialog.FileName);
+                CreateNewTab();
+                ActiveGraphControl.SetGraph(graphRecord);
             }
         }
     }

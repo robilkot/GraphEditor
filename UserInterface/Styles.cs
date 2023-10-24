@@ -1,6 +1,4 @@
-﻿using System.Windows.Forms;
-
-namespace LW5.UserInterface
+﻿namespace LW5.UserInterface
 {
     public static class Styles
     {
@@ -36,9 +34,12 @@ namespace LW5.UserInterface
         public const string ProgramDescriptionWindowText = "Описание программы";
         public const string ProgramDescriptionText = "Графовый редактор, сделанный в рамках лабороторной работы 5 по дисциплине ОТИС.\n\nWith love by @robilkot.";
         public static string ToRGBString(this Color color) => $"R {color.R}, G {color.G}, B {color.B}";
-        public static Point Center(this UserControl control) => new(
+        public static Point Center(this UserControl control)
+        {
+            return new(
             control.Left + control.Width / 2,
             control.Top + control.Height / 2
             );
+        }
     }
 }

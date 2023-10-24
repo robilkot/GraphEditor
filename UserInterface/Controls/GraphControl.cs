@@ -1,10 +1,10 @@
-﻿using LW5.Logic;
+﻿using LW5.FileSystem;
+using LW5.Logic;
 using System.Drawing.Drawing2D;
 using static LW5.UserInterface.Styles;
 
 namespace LW5.UserInterface
 {
-    [Serializable]
     public partial class GraphControl : UserControl
     {
         public List<ISelectable> Selected
@@ -32,11 +32,47 @@ namespace LW5.UserInterface
         public Graph Graph
         {
             get => _graph;
-            set
-            {
-                _graph = value;
+        }
 
-                InitializeControls();
+        public void SetGraph(GraphRecord graphRecord)
+        {
+            Controls.Clear();
+            _graph = new();
+            _graph.Elements.AddRange(from obj in graphRecord.GraphObjects
+                                     select obj.GraphObject);
+
+            foreach(var obj in graphRecord.GraphObjects)
+            {
+                GraphObjectControl newControl;
+                if(obj.GraphObject is Vertex)
+                {
+                    newControl = new VertexControl();
+                } else
+                {
+                    newControl = new EdgeControl();
+                }
+
+                newControl.Location = obj.Location;
+                newControl.Element = obj.GraphObject;
+                newControl.Bounds = obj.Bounds;
+
+                Controls.Add(newControl);
+            }
+
+            // Before those lines only elements in graph are linked, not their controls
+            foreach(var edge in Controls.OfType<EdgeControl>())
+            {
+                foreach(var c in Controls.OfType<GraphObjectControl>())
+                {
+                    if(c.Element == ((Edge)edge.Element).First)
+                    {
+                        edge.First = c;
+                    }
+                    if (c.Element == ((Edge)edge.Element).Second)
+                    {
+                        edge.Second = c;
+                    }
+                }
             }
         }
 
@@ -45,38 +81,6 @@ namespace LW5.UserInterface
             InitializeComponent();
         }
 
-        // todo: When implement filesystem, adapt this to work with real graphs and restoring vertices locations
-        private void InitializeControls()
-        {
-            Controls.Clear();
-            Point newControlLocation = new(Width / 2, Height / 2);
-
-            //foreach (var element in _graph.Elements)
-            //{
-            //    GraphObjectControl control;
-
-            //    if (element is Vertex)
-            //    {
-            //        control = new VertexControl()
-            //        {
-            //            Element = element
-            //        };
-            //    }// else if(element is Edge)
-            //    else
-            //    {
-            //        control = new EdgeControl()
-            //        {
-            //            Element = element
-            //        };
-            //    }
-
-            //    control.Location = newControlLocation;
-            //    Controls.Add(control);
-
-            //    newControlLocation.X += 50;
-            //    newControlLocation.Y += 50;
-            //}
-        }
         public void SelectAll()
         {
             foreach (var control in Controls.OfType<UserControl>())

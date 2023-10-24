@@ -1,4 +1,6 @@
-﻿namespace LW5.Logic
+﻿using System.Text.Json.Serialization;
+
+namespace LW5.Logic
 {
     [Serializable]
     public class Edge : GraphObject
@@ -10,6 +12,7 @@
         public GraphObject First { get; set; }
         public GraphObject Second { get; set; }
 
+        [JsonConstructor]
         public Edge() {
             Identifier = DefaultName;
         }

@@ -1,4 +1,6 @@
-﻿namespace LW5.Logic
+﻿using System.Text.Json.Serialization;
+
+namespace LW5.Logic
 {
     [Serializable]
     public class Graph
@@ -10,6 +12,9 @@
                                          where e.First == e.Second
                                          select e).ToList(); }
         public int Size => Vertices.Count;
+
+        [JsonConstructor]
+        public Graph() { }
 
         public void Add(GraphObject graphObject)
         {
