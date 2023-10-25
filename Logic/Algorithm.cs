@@ -112,6 +112,7 @@
                 route.Add(prevVerts[route.Last()]);
             }
 
+            route.Reverse();
             return route;
         }
 
@@ -121,8 +122,8 @@
 
             for (int i = 1; i < path.Count; i++)
             {
-                var e = path[i].IncidentEdges.Find(edge => edge.First == path[i] && edge.Second == path[i - 1]
-                || edge.EdgeType == EdgeType.Unoriented && edge.First == path[i - 1] && edge.Second == path[i]);
+                var e = path[i].IncidentEdges.Find(edge => edge.First == path[i-1] && edge.Second == path[i]
+                || edge.EdgeType == EdgeType.Unoriented && edge.First == path[i] && edge.Second == path[i-1]);
 
                 if (e != null)
                 {
@@ -168,7 +169,7 @@
             foreach (var vertex in graph.Vertices)
             {
                 visited.Clear();
-                VisitVertex(vertex, visited);
+                WeakVisitVertex(vertex, visited);
                 if (visited.Count != graph.Size)
                 {
                     return false;
@@ -188,6 +189,19 @@
             foreach (var adjacent in vertex.AdjacentVertices)
             {
                 VisitVertex(adjacent, visited);
+            }
+        }
+        private static void WeakVisitVertex(Vertex vertex, List<Vertex> visited)
+        {
+            if (visited.Contains(vertex))
+            {
+                return;
+            }
+            visited.Add(vertex);
+
+            foreach (var adjacent in WeakAdjacentVertices(vertex))
+            {
+                WeakVisitVertex(adjacent, visited);
             }
         }
         private static List<Vertex> WeakAdjacentVertices(Vertex vertex)

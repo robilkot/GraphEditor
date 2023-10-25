@@ -41,14 +41,15 @@ namespace LW5.UserInterface
             _graph.Elements.AddRange(from obj in graphRecord.GraphObjects
                                      select obj.GraphObject);
 
-            foreach(var obj in graphRecord.GraphObjects)
+            foreach (var obj in graphRecord.GraphObjects)
             {
                 // Bruh, sOlid has left chat
                 GraphObjectControl newControl;
-                if(obj.GraphObject is Vertex)
+                if (obj.GraphObject is Vertex)
                 {
                     newControl = new VertexControl();
-                } else
+                }
+                else
                 {
                     newControl = new EdgeControl();
                 }
@@ -60,17 +61,21 @@ namespace LW5.UserInterface
             }
 
             // Before these lines only elements in graph are linked, not their controls
-            foreach(var edge in Controls.OfType<EdgeControl>())
+            foreach (var edge in Controls.OfType<EdgeControl>())
             {
-                foreach(var c in Controls.OfType<GraphObjectControl>())
+                foreach (var c in Controls.OfType<GraphObjectControl>())
                 {
-                    if(c.Element == ((Edge)edge.Element).First)
+                    if (c.Element == ((Edge)edge.Element).First)
                     {
                         edge.First = c;
                     }
                     if (c.Element == ((Edge)edge.Element).Second)
                     {
                         edge.Second = c;
+                    }
+                    if (c.Element == ((Edge)edge.Element).Second || c.Element == ((Edge)edge.Element).First)
+                    {
+                        c.IncidentEdgeControls.Add(edge);
                     }
                 }
             }

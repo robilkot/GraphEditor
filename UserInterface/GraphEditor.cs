@@ -95,7 +95,8 @@ namespace LW5
         {
             if (ActiveGraph != null)
             {
-                MessageBox.Show(Algorithm.IsStronglyConnected(ActiveGraph).ToString());
+                var result = Algorithm.IsStronglyConnected(ActiveGraph);
+                MessageBox.Show(result ? "Граф является сильно связным" : "Граф не является сильно связным");
             }
         }
 
@@ -103,7 +104,8 @@ namespace LW5
         {
             if (ActiveGraph != null)
             {
-                MessageBox.Show(Algorithm.IsWeaklyConnected(ActiveGraph).ToString());
+                var result = Algorithm.IsWeaklyConnected(ActiveGraph);
+                MessageBox.Show(result ? "Граф является слабо связным" : "Граф не является слабо связным");
             }
         }
 
@@ -111,7 +113,8 @@ namespace LW5
         {
             if (ActiveGraph != null)
             {
-                MessageBox.Show(Algorithm.IsEuler(ActiveGraph).ToString());
+                var result = Algorithm.IsEuler(ActiveGraph);
+                MessageBox.Show(result ? "Граф является эйлеровым" : "Граф не является эйлеровым");
             }
         }
 
