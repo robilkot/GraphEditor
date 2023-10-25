@@ -51,6 +51,7 @@
             this.DeleteMenuItem});
             this.EdgeContextMenu.Name = "EdgeContextMenu";
             this.EdgeContextMenu.Size = new System.Drawing.Size(259, 128);
+            //this.EdgeContextMenu.Opened += new System.EventHandler(this.EdgeContextMenu_Opening);
             // 
             // RenameMenuItem
             // 

@@ -43,6 +43,7 @@
             EulerCheckMenuItem = new ToolStripMenuItem();
             FindEulerCycleMenuItem = new ToolStripMenuItem();
             FindShortestRouteMenuItem = new ToolStripMenuItem();
+            FindShortestRouteLengthMenuItem = new ToolStripMenuItem();
             InfoMenuItem = new ToolStripMenuItem();
             OpenFileDialog = new OpenFileDialog();
             SaveFileDialog = new SaveFileDialog();
@@ -120,7 +121,7 @@
             // 
             // ToolsMenuItem
             // 
-            ToolsMenuItem.DropDownItems.AddRange(new ToolStripItem[] { EnableStatisticsMenuItem, StrongConnectivityCheckMenuItem, WeakConnectivityCheckMenuItem, EulerCheckMenuItem, FindEulerCycleMenuItem, FindShortestRouteMenuItem });
+            ToolsMenuItem.DropDownItems.AddRange(new ToolStripItem[] { EnableStatisticsMenuItem, StrongConnectivityCheckMenuItem, WeakConnectivityCheckMenuItem, EulerCheckMenuItem, FindEulerCycleMenuItem, FindShortestRouteMenuItem, FindShortestRouteLengthMenuItem });
             ToolsMenuItem.Name = "ToolsMenuItem";
             ToolsMenuItem.Size = new Size(138, 29);
             ToolsMenuItem.Text = "Инструменты";
@@ -166,6 +167,13 @@
             FindShortestRouteMenuItem.Size = new Size(389, 34);
             FindShortestRouteMenuItem.Text = "Найти кратчайший путь";
             FindShortestRouteMenuItem.Click += FindRouteMenuItem_Click;
+            // 
+            // FindShortestRouteMenuItem
+            // 
+            FindShortestRouteLengthMenuItem.Name = "FindShortestRouteLengthMenuItem";
+            FindShortestRouteLengthMenuItem.Size = new Size(389, 34);
+            FindShortestRouteLengthMenuItem.Text = "Найти расстояние между вершинами";
+            FindShortestRouteLengthMenuItem.Click += FindShortestRouteLengthMenuItem_Click;
             // 
             // InfoMenuItem
             // 
@@ -222,6 +230,7 @@
         private ToolStripMenuItem EulerCheckMenuItem;
         private ToolStripMenuItem FindEulerCycleMenuItem;
         private ToolStripMenuItem FindShortestRouteMenuItem;
+        private ToolStripMenuItem FindShortestRouteLengthMenuItem;
         private OpenFileDialog OpenFileDialog;
         private SaveFileDialog SaveFileDialog;
     }

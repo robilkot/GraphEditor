@@ -129,6 +129,10 @@ namespace LW5.UserInterface
         {
             CreateEdge();
         }
+        private void EdgeContextMenu_Opening(object sender, EventArgs e)
+        {
+            IsOrientedMenuItem.Checked = ((Edge)Element).EdgeType == EdgeType.Oriented;
+        }
 
         public override void Draw(PaintEventArgs e)
         {

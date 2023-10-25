@@ -55,6 +55,7 @@
             // 
             this.RenameMenuItem.Name = "RenameMenuItem";
             this.RenameMenuItem.Size = new System.Drawing.Size(258, 24);
+            this.RenameMenuItem.ShortcutKeyDisplayString = "I";
             this.RenameMenuItem.Text = "Изменить идентификатор";
             this.RenameMenuItem.Click += new System.EventHandler(this.RenameMenuItem_Click);
             // 
@@ -62,6 +63,7 @@
             // 
             this.ChangeColorMenuItem.Name = "ChangeColorMenuItem";
             this.ChangeColorMenuItem.Size = new System.Drawing.Size(258, 24);
+            this.ChangeColorMenuItem.ShortcutKeyDisplayString = "C";
             this.ChangeColorMenuItem.Text = "Изменить цвет";
             this.ChangeColorMenuItem.Click += new System.EventHandler(this.ChangeColorMenuItem_Click);
             // 
@@ -74,6 +76,7 @@
             // 
             // ExcludeMenuItem
             // 
+            //this.ExcludeMenuItem.Visible = false; // Not implemented. Yet.
             this.ExcludeMenuItem.Name = "ExcludeMenuItem";
             this.ExcludeMenuItem.Size = new System.Drawing.Size(258, 24);
             this.ExcludeMenuItem.Text = "Исключить";
@@ -82,6 +85,7 @@
             // 
             this.DeleteMenuItem.Name = "DeleteMenuItem";
             this.DeleteMenuItem.Size = new System.Drawing.Size(258, 24);
+            this.DeleteMenuItem.ShortcutKeyDisplayString = "Alt+Del";
             this.DeleteMenuItem.Text = "Удалить";
             this.DeleteMenuItem.Click += new System.EventHandler(this.DeleteMenuItem_Click);
             // 

@@ -115,6 +115,24 @@
             return route;
         }
 
+        public static int Length(List<Vertex> path)
+        {
+            int length = 0;
+
+            for (int i = 1; i < path.Count; i++)
+            {
+                var e = path[i].IncidentEdges.Find(edge => edge.First == path[i] && edge.Second == path[i - 1]
+                || edge.EdgeType == EdgeType.Unoriented && edge.First == path[i - 1] && edge.Second == path[i]);
+
+                if (e != null)
+                {
+                    length += e.Weight;
+                }
+            }
+
+            return length;
+        }
+
         //public static List<List<Vertex>> GetAllRoutes(Graph graph, Vertex begin, Vertex end)
         //{
         //    List<List<Vertex>> routes = new();
@@ -123,6 +141,25 @@
         //}
 
         public static bool IsStronglyConnected(Graph graph)
+        {
+            if (graph.Size == 0) return false;
+
+            List<Vertex> visited = new(graph.Size);
+
+            foreach (var vertex in graph.Vertices)
+            {
+                visited.Clear();
+                VisitVertex(vertex, visited);
+                if (visited.Count != graph.Size)
+                {
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        public static bool IsWeaklyConnected(Graph graph)
         {
             if (graph.Size == 0) return false;
 
@@ -151,38 +188,6 @@
             foreach (var adjacent in vertex.AdjacentVertices)
             {
                 VisitVertex(adjacent, visited);
-            }
-        }
-
-        public static bool IsWeaklyConnected(Graph graph)
-        {
-            if (graph.Size == 0) return false;
-
-            List<Vertex> visited = new(graph.Size);
-
-            foreach (var vertex in graph.Vertices)
-            {
-                visited.Clear();
-                WeakVisitVertex(vertex, visited);
-                if (visited.Count != graph.Size)
-                {
-                    return false;
-                }
-            }
-
-            return true;
-        }
-        private static void WeakVisitVertex(Vertex vertex, List<Vertex> visited)
-        {
-            if (visited.Contains(vertex))
-            {
-                return;
-            }
-            visited.Add(vertex);
-
-            foreach (var adjacent in WeakAdjacentVertices(vertex))
-            {
-                WeakVisitVertex(adjacent, visited);
             }
         }
         private static List<Vertex> WeakAdjacentVertices(Vertex vertex)

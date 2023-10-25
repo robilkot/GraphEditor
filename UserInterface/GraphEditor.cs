@@ -1,4 +1,5 @@
-﻿using LW5.Logic;
+﻿using LW5.FileSystem;
+using LW5.Logic;
 using LW5.UserInterface;
 
 using static LW5.UserInterface.Styles;
@@ -157,6 +158,30 @@ namespace LW5
             }
         }
 
+        private void FindShortestRouteLengthMenuItem_Click(object sender, EventArgs e)
+        {
+            if (ActiveGraph != null)
+            {
+                if (ActiveGraphControl.Selected.Count >= 2 &&
+                    ActiveGraphControl.Selected[0] is VertexControl vc1 &&
+                    ActiveGraphControl.Selected[1] is VertexControl vc2)
+                {
+                    var path = Algorithm.Dijkstra(ActiveGraph, (Vertex)vc1.Element, (Vertex)vc2.Element);
+                    if (path.Count < 1)
+                    {
+                        MessageBox.Show("Маршрут между вершинами не найден");
+                    } else
+                    {
+                        MessageBox.Show($"Расстояние между вершинами: {Algorithm.Length(path)}");
+                    }
+                   
+                    return;
+                }
+                MessageBox.Show("Первые два выделенных элемента должны быть начальной и конечной точкой маршрута");
+                return;
+            }
+        }
+
         private void SaveAsMenuItem_Click(object sender, EventArgs e)
         {
             if (ActiveGraphControl != null)
@@ -164,6 +189,7 @@ namespace LW5
                 if (SaveFileDialog.ShowDialog() == DialogResult.OK)
                 {
                     FileSystem.FileSystem.SaveToFile(new(ActiveGraphControl), SaveFileDialog.FileName);
+                    OpenedFilesTabs.SelectedTab.Text = Path.GetFileName(SaveFileDialog.FileName);
                 }
             }
         }
@@ -173,9 +199,15 @@ namespace LW5
             if (OpenFileDialog.ShowDialog() == DialogResult.OK)
             {
                 var graphRecord = FileSystem.FileSystem.ReadFromFile(OpenFileDialog.FileName);
-                CreateNewTab();
-                ActiveGraphControl.SetGraph(graphRecord);
+                OpenGraph(graphRecord, Path.GetFileName(OpenFileDialog.FileName));
             }
+        }
+
+        public void OpenGraph(GraphRecord graphRecord, string name)
+        {
+            CreateNewTab();
+            ActiveGraphControl.SetGraph(graphRecord);
+            OpenedFilesTabs.SelectedTab.Text = name;
         }
     }
 }
