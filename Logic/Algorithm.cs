@@ -27,6 +27,8 @@
             return true;
         }
 
+
+        // todo: doesnt work with unoriented edges
         public static List<Vertex> EulerCycle(Graph graph)
         {
             if (graph.Size == 0)
@@ -134,16 +136,12 @@
             return length;
         }
 
-        //public static List<List<Vertex>> GetAllRoutes(Graph graph, Vertex begin, Vertex end)
-        //{
-        //    List<List<Vertex>> routes = new();
-
-        //    return routes;
-        //}
-
         public static bool IsStronglyConnected(Graph graph)
         {
-            if (graph.Size == 0) return false;
+            if (graph.Size == 0)
+            {
+                return false;
+            }
 
             List<Vertex> visited = new(graph.Size);
 
@@ -162,7 +160,10 @@
 
         public static bool IsWeaklyConnected(Graph graph)
         {
-            if (graph.Size == 0) return false;
+            if (graph.Size == 0)
+            {
+                return false;
+            }
 
             List<Vertex> visited = new(graph.Size);
 

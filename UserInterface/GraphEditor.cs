@@ -1,5 +1,6 @@
 ﻿using LW5.FileSystem;
 using LW5.Logic;
+using LW5.Logic.Commands;
 using LW5.UserInterface;
 
 using static LW5.UserInterface.Styles;
@@ -8,6 +9,7 @@ namespace LW5
 {
     public partial class GraphEditor : Form
     {
+        private Invoker _invoker = new();
         public Graph? ActiveGraph
         {
             get
@@ -21,11 +23,7 @@ namespace LW5
             {
                 if (OpenedFilesTabs.SelectedTab == null) return null;
 
-                if (OpenedFilesTabs.SelectedTab.Controls["graphLayout"] is GraphControl graphControl)
-                {
-                    return graphControl;
-                }
-                else return null;
+                return OpenedFilesTabs.SelectedTab.Controls["graphLayout"] as GraphControl;
             }
         }
         public GraphEditor()
@@ -58,6 +56,10 @@ namespace LW5
         private void CreateMenuItem_Click(object sender, EventArgs e)
         {
             CreateNewTab();
+
+            ToolsMenuItem.Enabled = true;
+            CloseMenuItem.Enabled = true;
+            SaveAsMenuItem.Enabled = true;
         }
 
         private void CloseMenuItem_Click(object sender, EventArgs e)
@@ -65,22 +67,26 @@ namespace LW5
             if (OpenedFilesTabs.SelectedTab != null)
             {
                 OpenedFilesTabs.TabPages.Remove(OpenedFilesTabs.SelectedTab);
+
+                if (OpenedFilesTabs.TabPages.Count == 0)
+                {
+                    ToolsMenuItem.Enabled = false;
+                    CloseMenuItem.Enabled = false;
+                    SaveAsMenuItem.Enabled = false;
+                }
             }
         }
 
         private void InfoMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show(ProgramDescriptionText, ProgramDescriptionWindowText);
+            MessageBox.Show(ProgramDescriptionText, ProgramDescriptionWindowTitle);
         }
 
         private void EnableStatisticsMenuItem_Click(object sender, EventArgs e)
         {
-            if (ActiveGraphControl != null)
-            {
-                EnableStatisticsMenuItem.Checked = !EnableStatisticsMenuItem.Checked;
-                ActiveGraphControl.DisplayStatistics = EnableStatisticsMenuItem.Checked;
-                ActiveGraphControl?.Invalidate();
-            }
+            EnableStatisticsMenuItem.Checked = !EnableStatisticsMenuItem.Checked;
+            ActiveGraphControl.DisplayStatistics = EnableStatisticsMenuItem.Checked;
+            ActiveGraphControl.Invalidate();
         }
 
         private void OpenedFilesTabs_Selected(object sender, TabControlEventArgs e)
@@ -93,107 +99,78 @@ namespace LW5
 
         private void ConnectivityCheckMenuItem_Click(object sender, EventArgs e)
         {
-            if (ActiveGraph != null)
-            {
-                var result = Algorithm.IsStronglyConnected(ActiveGraph);
-                MessageBox.Show(result ? "Граф является сильно связным" : "Граф не является сильно связным");
-            }
+            IsStronglyConnectedCommand command = new(ActiveGraph);
+            _invoker.SetCommand(command);
+            _invoker.Run();
+
+            MessageBox.Show(command.Result ? "Граф является сильно связным" : "Граф не является сильно связным");
         }
 
         private void WeakConnectivityCheckMenuItem_Click(object sender, EventArgs e)
         {
-            if (ActiveGraph != null)
-            {
-                var result = Algorithm.IsWeaklyConnected(ActiveGraph);
-                MessageBox.Show(result ? "Граф является слабо связным" : "Граф не является слабо связным");
-            }
+            IsWeaklyConnectedCommand command = new(ActiveGraph);
+            _invoker.SetCommand(command);
+            _invoker.Run();
+
+            MessageBox.Show(command.Result ? "Граф является слабо связным" : "Граф не является слабо связным");
         }
 
         private void EulerCheckMenuItem_Click(object sender, EventArgs e)
         {
-            if (ActiveGraph != null)
-            {
-                var result = Algorithm.IsEuler(ActiveGraph);
-                MessageBox.Show(result ? "Граф является эйлеровым" : "Граф не является эйлеровым");
-            }
+            IsEulerCommand command = new(ActiveGraph);
+            _invoker.SetCommand(command);
+            _invoker.Run();
+
+            MessageBox.Show(command.Result ? "Граф является эйлеровым" : "Граф не является эйлеровым");
         }
 
         private void FindEulerCycleMenuItem_Click(object sender, EventArgs e)
         {
-            if (ActiveGraph != null)
-            {
-                var path = Algorithm.EulerCycle(ActiveGraph);
-                if (path.Count == 0)
-                {
-                    MessageBox.Show("Граф не содержит эйлеров цикл");
-                    return;
-                }
+            EulerCycleCommand command = new(ActiveGraph);
+            _invoker.SetCommand(command);
+            _invoker.Run();
 
+            if (command.Result.Count > 0)
+            {
                 var viewer = new ResultViewer();
-                viewer.SetContent(path);
+                viewer.SetContent(command.Result);
                 viewer.Show();
             }
         }
 
         private void FindRouteMenuItem_Click(object sender, EventArgs e)
         {
-            if (ActiveGraph != null)
+            DijkstraCommand command = new(ActiveGraph, (from control in ActiveGraphControl.Selected
+                                                        where control is GraphObjectControl gControl
+                                                        select ((GraphObjectControl)control).Element).ToList());
+            _invoker.SetCommand(command);
+            _invoker.Run();
+
+            if (command.Result.Count > 1)
             {
-                if (ActiveGraphControl.Selected.Count >= 2 &&
-                    ActiveGraphControl.Selected[0] is VertexControl vc1 &&
-                    ActiveGraphControl.Selected[1] is VertexControl vc2)
-                {
-                    var path = Algorithm.Dijkstra(ActiveGraph, (Vertex)vc1.Element, (Vertex)vc2.Element);
-                    if (path.Count < 1)
-                    {
-                        MessageBox.Show("Маршрут между вершинами не найден");
-                        return;
-                    }
-
-                    var viewer = new ResultViewer();
-                    viewer.SetContent(path);
-                    viewer.Show();
-
-                    return;
-                }
-                MessageBox.Show("Первые два выделенных элемента должны быть начальной и конечной точкой маршрута");
-                return;
+                var viewer = new ResultViewer();
+                viewer.SetContent(command.Result);
+                viewer.Show();
             }
         }
 
         private void FindShortestRouteLengthMenuItem_Click(object sender, EventArgs e)
         {
-            if (ActiveGraph != null)
-            {
-                if (ActiveGraphControl.Selected.Count >= 2 &&
-                    ActiveGraphControl.Selected[0] is VertexControl vc1 &&
-                    ActiveGraphControl.Selected[1] is VertexControl vc2)
-                {
-                    var path = Algorithm.Dijkstra(ActiveGraph, (Vertex)vc1.Element, (Vertex)vc2.Element);
-                    if (path.Count < 1)
-                    {
-                        MessageBox.Show("Маршрут между вершинами не найден");
-                    } else
-                    {
-                        MessageBox.Show($"Расстояние между вершинами: {Algorithm.Length(path)}");
-                    }
-                   
-                    return;
-                }
-                MessageBox.Show("Первые два выделенных элемента должны быть начальной и конечной точкой маршрута");
-                return;
-            }
+            FindShortestPathLengthCommand command = new(ActiveGraph, (from control in ActiveGraphControl.Selected
+                                                                      where control is GraphObjectControl gControl
+                                                                      select ((GraphObjectControl)control).Element).ToList());
+            _invoker.SetCommand(command);
+            _invoker.Run();
+
+            MessageBox.Show($"Длина найденного пути: {command.Result}");
         }
 
         private void SaveAsMenuItem_Click(object sender, EventArgs e)
         {
-            if (ActiveGraphControl != null)
+            if (SaveFileDialog.ShowDialog() == DialogResult.OK)
             {
-                if (SaveFileDialog.ShowDialog() == DialogResult.OK)
-                {
-                    FileSystem.FileSystem.SaveToFile(new(ActiveGraphControl), SaveFileDialog.FileName);
-                    OpenedFilesTabs.SelectedTab.Text = Path.GetFileName(SaveFileDialog.FileName);
-                }
+                FileSystem.FileSystem.SaveToFile(new(ActiveGraphControl), SaveFileDialog.FileName);
+                OpenedFilesTabs.SelectedTab.Text = Path.GetFileName(SaveFileDialog.FileName);
             }
         }
 

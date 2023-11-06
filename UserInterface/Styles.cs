@@ -31,7 +31,7 @@
         public const string NumberInputWindowTitleText = "Ввод целочисленного значения";
         public const string NumberEvaluatingErrorText = "Введено не целочисленное значение";
 
-        public const string ProgramDescriptionWindowText = "Описание программы";
+        public const string ProgramDescriptionWindowTitle = "Описание программы";
         public const string ProgramDescriptionText = "Графовый редактор, сделанный в рамках лабороторной работы 5 по дисциплине ОТИС.\n\nWith love by @robilkot.";
         public static string ToRGBString(this Color color) => $"R {color.R}, G {color.G}, B {color.B}";
         public static Point Center(this UserControl control)
