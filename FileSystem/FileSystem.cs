@@ -40,7 +40,14 @@ namespace LW5.FileSystem
     public class ColorJsonConverter : JsonConverter<Color>
     {
         public override Color Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options) => ColorTranslator.FromHtml(reader.GetString());
-        public override void Write(Utf8JsonWriter writer, Color value, JsonSerializerOptions options) => writer.WriteStringValue("#" + value.R.ToString("X2") + value.G.ToString("X2") + value.B.ToString("X2").ToLower());
+        public override void Write(Utf8JsonWriter writer, Color value, JsonSerializerOptions options)
+        {
+            writer.WriteStringValue("#"
+                + value.R.ToString("X2")
+                + value.G.ToString("X2")
+                + value.B.ToString("X2")
+                .ToLower());
+        }
     }
 
     public class PointJsonConverter : JsonConverter<Point>
@@ -50,6 +57,9 @@ namespace LW5.FileSystem
             string[] coordinates = reader.GetString().Split(';');
             return new(int.Parse(coordinates[0]), int.Parse(coordinates[1]));
         }
-        public override void Write(Utf8JsonWriter writer, Point value, JsonSerializerOptions options) => writer.WriteStringValue(value.X.ToString() + ';' + value.Y.ToString());
+        public override void Write(Utf8JsonWriter writer, Point value, JsonSerializerOptions options)
+        {
+            writer.WriteStringValue(value.X.ToString() + ';' + value.Y.ToString());
+        }
     }
 }

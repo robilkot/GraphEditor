@@ -1,4 +1,7 @@
-﻿namespace LW5.Logic.Commands
+﻿using LW5.Interfaces;
+using LW5.Logic;
+
+namespace LW5.Commands
 {
     public class EulerCycleCommand : ICommand
     {

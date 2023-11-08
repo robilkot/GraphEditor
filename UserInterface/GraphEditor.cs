@@ -1,6 +1,6 @@
-﻿using LW5.FileSystem;
+﻿using LW5.Commands;
+using LW5.FileSystem;
 using LW5.Logic;
-using LW5.Logic.Commands;
 using LW5.UserInterface;
 
 using static LW5.UserInterface.Styles;
@@ -46,23 +46,12 @@ namespace LW5
 
             OpenedFilesTabs.TabPages.Add(newTab);
             OpenedFilesTabs.SelectTab(newTab);
-        }
-
-        private void GraphEditor_Load(object sender, EventArgs e)
-        {
-            CreateNewTab();
-        }
-
-        private void CreateMenuItem_Click(object sender, EventArgs e)
-        {
-            CreateNewTab();
 
             ToolsMenuItem.Enabled = true;
             CloseMenuItem.Enabled = true;
             SaveAsMenuItem.Enabled = true;
         }
-
-        private void CloseMenuItem_Click(object sender, EventArgs e)
+        private void CloseActiveTab()
         {
             if (OpenedFilesTabs.SelectedTab != null)
             {
@@ -75,6 +64,43 @@ namespace LW5
                     SaveAsMenuItem.Enabled = false;
                 }
             }
+        }
+        public void SaveFileAs()
+        {
+            if (SaveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                FileSystem.FileSystem.SaveToFile(new(ActiveGraphControl), SaveFileDialog.FileName);
+                OpenedFilesTabs.SelectedTab.Text = Path.GetFileName(SaveFileDialog.FileName);
+            }
+        }
+        public void OpenFile()
+        {
+            if (OpenFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                var graphRecord = FileSystem.FileSystem.ReadFromFile(OpenFileDialog.FileName);
+                CreateNewTab();
+                OpenGraph(graphRecord, Path.GetFileName(OpenFileDialog.FileName));
+            }
+        }
+        public void OpenGraph(GraphRecord graphRecord, string name)
+        {
+            ActiveGraphControl.SetGraph(graphRecord);
+            OpenedFilesTabs.SelectedTab.Text = name;
+        }
+
+        private void GraphEditor_Load(object sender, EventArgs e)
+        {
+            CreateNewTab();
+        }
+
+        private void CreateMenuItem_Click(object sender, EventArgs e)
+        {
+            CreateNewTab();
+        }
+
+        private void CloseMenuItem_Click(object sender, EventArgs e)
+        {
+            CloseActiveTab();
         }
 
         private void InfoMenuItem_Click(object sender, EventArgs e)
@@ -140,9 +166,7 @@ namespace LW5
 
         private void FindRouteMenuItem_Click(object sender, EventArgs e)
         {
-            DijkstraCommand command = new(ActiveGraph, (from control in ActiveGraphControl.Selected
-                                                        where control is GraphObjectControl gControl
-                                                        select ((GraphObjectControl)control).Element).ToList());
+            DijkstraCommand command = new(ActiveGraph, ActiveGraphControl.Selected);
             _invoker.SetCommand(command);
             _invoker.Run();
 
@@ -156,9 +180,7 @@ namespace LW5
 
         private void FindShortestRouteLengthMenuItem_Click(object sender, EventArgs e)
         {
-            FindShortestPathLengthCommand command = new(ActiveGraph, (from control in ActiveGraphControl.Selected
-                                                                      where control is GraphObjectControl gControl
-                                                                      select ((GraphObjectControl)control).Element).ToList());
+            FindShortestPathLengthCommand command = new(ActiveGraph, ActiveGraphControl.Selected);
             _invoker.SetCommand(command);
             _invoker.Run();
 
@@ -167,27 +189,12 @@ namespace LW5
 
         private void SaveAsMenuItem_Click(object sender, EventArgs e)
         {
-            if (SaveFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                FileSystem.FileSystem.SaveToFile(new(ActiveGraphControl), SaveFileDialog.FileName);
-                OpenedFilesTabs.SelectedTab.Text = Path.GetFileName(SaveFileDialog.FileName);
-            }
+            SaveFileAs();
         }
 
         private void OpenMenuItem_Click(object sender, EventArgs e)
         {
-            if (OpenFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                var graphRecord = FileSystem.FileSystem.ReadFromFile(OpenFileDialog.FileName);
-                OpenGraph(graphRecord, Path.GetFileName(OpenFileDialog.FileName));
-            }
-        }
-
-        public void OpenGraph(GraphRecord graphRecord, string name)
-        {
-            CreateNewTab();
-            ActiveGraphControl.SetGraph(graphRecord);
-            OpenedFilesTabs.SelectedTab.Text = name;
+            OpenFile();
         }
     }
 }

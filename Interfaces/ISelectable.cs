@@ -1,4 +1,4 @@
-﻿namespace LW5.UserInterface
+﻿namespace LW5.Interfaces
 {
     public interface ISelectable
     {

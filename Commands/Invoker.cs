@@ -1,4 +1,6 @@
-﻿namespace LW5.Logic.Commands
+﻿using LW5.Interfaces;
+
+namespace LW5.Commands
 {
     public class Invoker
     {
@@ -12,12 +14,12 @@
         {
             try
             {
-                if(_command.CanBeExecuted)
+                if (_command.CanBeExecuted)
                 {
                     _command.Execute();
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }

@@ -18,15 +18,30 @@ namespace LW5.Logic
 
                 foreach (var e in IncidentEdges)
                 {
-                    if (e.Second is Vertex v2 && v2 != this)
-                    {
-                        adjacent.Add(v2);
-                    }
                     if (e.EdgeType == EdgeType.Unoriented)
                     {
-                        if (e.First is Vertex v1 && v1 != this)
+                        if (e.First == this && e.Second == this)
                         {
-                            adjacent.Add(v1);
+                            adjacent.Add(this);
+                        }
+                        else
+                        {
+                            if (e.First != this && e.Second is Vertex v1)
+                            {
+                                adjacent.Add(v1);
+                            }
+                            else if (e.Second != this && e.First is Vertex v2)
+                            {
+                                adjacent.Add(v2);
+                            }
+                        }
+                    }
+
+                    if (e.EdgeType == EdgeType.Oriented)
+                    {
+                        if (e.First == this && e.Second is Vertex v)
+                        {
+                            adjacent.Add(v);
                         }
                     }
                 }

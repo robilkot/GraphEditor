@@ -1,9 +1,12 @@
-﻿namespace LW5.Logic.Commands
+﻿using LW5.Interfaces;
+using LW5.Logic;
+
+namespace LW5.Commands
 {
     public class FindShortestPathLengthCommand : ICommand
     {
         private Graph _graph;
-        private List<GraphObject> _selection;
+        private List<ISelectable> _selection;
         public int Result = 0;
         public bool CanBeExecuted
         {
@@ -19,7 +22,7 @@
                 }
             }
         }
-        public FindShortestPathLengthCommand(Graph graph, List<GraphObject> selection)
+        public FindShortestPathLengthCommand(Graph graph, List<ISelectable> selection)
         {
             _graph = graph;
             _selection = selection;

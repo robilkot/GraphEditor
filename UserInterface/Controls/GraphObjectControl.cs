@@ -1,5 +1,6 @@
 ﻿using LW5.Logic;
 using Microsoft.VisualBasic;
+using LW5.Interfaces;
 
 using static LW5.UserInterface.Styles;
 
@@ -19,7 +20,6 @@ namespace LW5.UserInterface
             {
                 incident.Delete();
             }
-            GraphControl?.Invalidate();
             GraphControl?.Remove(this);
             Dispose();
         }

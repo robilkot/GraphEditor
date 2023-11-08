@@ -1,4 +1,4 @@
-﻿namespace LW5.Logic.Commands
+﻿namespace LW5.Interfaces
 {
     public interface ICommand
     {

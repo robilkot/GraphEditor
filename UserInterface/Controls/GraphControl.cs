@@ -1,6 +1,8 @@
 ﻿using LW5.FileSystem;
 using LW5.Logic;
 using System.Drawing.Drawing2D;
+using LW5.Interfaces;
+
 using static LW5.UserInterface.Styles;
 
 namespace LW5.UserInterface
@@ -124,6 +126,8 @@ namespace LW5.UserInterface
         {
             Controls.Remove(control);
             _graph.Remove(control.Element);
+
+            Invalidate();
         }
         public void StartCreatingEdge(GraphObjectControl sourceControl)
         {
@@ -145,10 +149,10 @@ namespace LW5.UserInterface
                 _edgeControlToBeCreated.Second = destinationControl;
 
                 destinationControl.IncidentEdgeControls.Add(_edgeControlToBeCreated);
-                destinationControl.Element?.IncidentEdges.Add((Edge)_edgeControlToBeCreated.Element);
+                destinationControl.Element.IncidentEdges.Add((Edge)_edgeControlToBeCreated.Element);
 
-                _edgeControlToBeCreated.First?.IncidentEdgeControls.Add(_edgeControlToBeCreated);
-                _edgeControlToBeCreated.First?.Element?.IncidentEdges.Add((Edge)_edgeControlToBeCreated.Element);
+                _edgeControlToBeCreated.First.IncidentEdgeControls.Add(_edgeControlToBeCreated);
+                _edgeControlToBeCreated.First.Element.IncidentEdges.Add((Edge)_edgeControlToBeCreated.Element);
 
                 _graph.Add(_edgeControlToBeCreated.Element);
                 Controls.Add(_edgeControlToBeCreated);
@@ -178,11 +182,7 @@ namespace LW5.UserInterface
 
         private void DeleteSelectedMenuItem_Click(object sender, EventArgs e)
         {
-            var toDelete = from o in Selected
-                           where o is IDeletable
-                           select o as IDeletable;
-
-            foreach (var element in toDelete)
+            foreach (var element in Selected.OfType<IDeletable>())
             {
                 element.Delete();
             }
@@ -233,6 +233,10 @@ namespace LW5.UserInterface
             {
                 ((IDrawable)control).Draw(e);
             }
+            //foreach (var control in Controls.OfType<IDrawable>())
+            //{
+            //    control.Draw(e);
+            //}
 
             if (_selecting)
             {
@@ -295,7 +299,6 @@ namespace LW5.UserInterface
                             control.Selected = true;
                         };
                     }
-
                 }
             }
             _selecting = false;
